@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Inter } from "next/font/google";
+import { Oswald, Poppins } from "next/font/google";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -10,16 +10,21 @@ import { site } from "@/lib/site";
 
 import "./globals.css";
 
-const display = Archivo({
+/* Oswald para titulares: condensada, con carácter industrial que le queda a
+   un fabricante. Es variable, así que un solo archivo cubre todos los pesos. */
+const display = Oswald({
   subsets: ["latin"],
   variable: "--font-display-src",
-  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-const body = Inter({
+/* Poppins para el texto corrido. No tiene versión variable en Google Fonts,
+   así que se piden solo los pesos que el sitio usa de verdad: cargar los
+   nueve serían nueve archivos por cada juego de caracteres. */
+const body = Poppins({
   subsets: ["latin"],
   variable: "--font-body-src",
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
@@ -51,8 +56,16 @@ export default function RootLayout({
     /* `data-scroll-behavior="smooth"` le pide a Next 16 que siga anulando el
        scroll suave durante las transiciones de ruta: el scroll suave lo
        queremos para anclas internas, no para cambiar de página. */
-    <html lang="es-MX" data-scroll-behavior="smooth">
-      <body className={`${display.variable} ${body.variable} antialiased`}>
+    /* Las variables de next/font van en <html>, no en <body>: los tokens de
+       globals.css (`--font-display: var(--font-display-src), …`) se declaran
+       en :root, y ahí una variable definida más abajo todavía no existe. La
+       declaración quedaba inválida y todo caía a la pila del sistema. */
+    <html
+      lang="es-MX"
+      data-scroll-behavior="smooth"
+      className={`${display.variable} ${body.variable}`}
+    >
+      <body className="antialiased">
         <MotionProvider>
           <a
             href="#contenido"

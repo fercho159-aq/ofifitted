@@ -129,7 +129,9 @@ export const megaMenu: MegaGroup[] = [
     ],
   },
   {
-    label: "Recepción y espera",
+    // Etiqueta corta a propósito: en la barra compite por ancho con otras
+    // cuatro. El panel ya explica que incluye sillones y sala de espera.
+    label: "Recepción",
     href: "/catalogo/recepciones",
     blurb:
       "Lo primero que ve tu cliente. Recepciones a medida y salas de espera que aguantan uso rudo.",

@@ -130,7 +130,7 @@ export function HeaderClient({ groups, links }: Props) {
                     aria-haspopup="true"
                     onFocus={() => openNow(group.label)}
                     className={cn(
-                      "relative flex h-[var(--header-h)] items-center px-3 text-sm font-medium transition-colors",
+                      "relative flex h-[var(--header-h)] items-center px-2.5 text-sm font-medium whitespace-nowrap transition-colors xl:px-3",
                       isOpen ? "text-brand-600" : "text-ink-700 hover:text-brand-600"
                     )}
                   >
@@ -146,13 +146,17 @@ export function HeaderClient({ groups, links }: Props) {
               );
             })}
 
-            <span className="mx-2 h-4 w-px bg-ink-200" aria-hidden />
+            {/* Los enlaces secundarios aparecen hasta xl. Entre 1024 y 1280 el
+                mega menú ya ocupa el ancho disponible y meterlos aquí parte
+                las etiquetas en dos líneas; siguen accesibles desde el pie y
+                desde el menú móvil. */}
+            <span className="mx-2 hidden h-4 w-px bg-ink-200 xl:block" aria-hidden />
 
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 text-sm font-medium text-ink-700 transition-colors hover:text-brand-600"
+                className="hidden px-3 text-sm font-medium whitespace-nowrap text-ink-700 transition-colors hover:text-brand-600 xl:block"
               >
                 {link.label}
               </Link>
@@ -164,7 +168,7 @@ export function HeaderClient({ groups, links }: Props) {
               href={whatsappUrl(waMessages.general)}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden items-center gap-2 bg-accent-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-700 sm:inline-flex"
+              className="hidden shrink-0 items-center gap-2 bg-accent-600 px-5 py-2.5 text-sm font-medium whitespace-nowrap text-white transition-colors hover:bg-accent-700 sm:inline-flex"
             >
               Cotizar ahora
             </a>
