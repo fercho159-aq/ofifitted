@@ -1,26 +1,160 @@
 @import "tailwindcss";
 
+/* ============================================================
+   OFIFITTED — sistema de diseño
+   Marca tomada del logo original: silla roja + tipografía azul.
+   ============================================================ */
+
+@theme {
+  /* ── Marca ─────────────────────────────────────────────── */
+  --color-brand-50: #eef0fb;
+  --color-brand-100: #d9ddf5;
+  --color-brand-200: #b4baea;
+  --color-brand-300: #8b93dc;
+  --color-brand-400: #5f68c4;
+  --color-brand-500: #3f45a3;
+  --color-brand-600: #2d2e80; /* azul del logo */
+  --color-brand-700: #252668;
+  --color-brand-800: #1b1c4c;
+  --color-brand-900: #131335;
+
+  /* Rojo de acción. El logo usa #FF0000 puro; para texto y botones
+     usamos uno ligeramente más profundo que sí pasa contraste AA. */
+  --color-accent-50: #fff1f2;
+  --color-accent-100: #ffdfe2;
+  --color-accent-200: #ffc3c8;
+  --color-accent-300: #ff939c;
+  --color-accent-400: #fa5563;
+  --color-accent-500: #ef2334;
+  --color-accent-600: #e30613; /* CTA */
+  --color-accent-700: #bf0511;
+  --color-accent-800: #9d0812;
+  --color-accent-900: #820c15;
+  --color-accent-pure: #ff0000; /* solo para el isotipo */
+
+  /* ── Neutros cálidos ───────────────────────────────────── */
+  --color-ink-50: #f8f8f7;
+  --color-ink-100: #efeeec;
+  --color-ink-200: #dedcd8;
+  --color-ink-300: #c2bfb9;
+  --color-ink-400: #9c9891;
+  --color-ink-500: #7b7770;
+  --color-ink-600: #5f5c56;
+  --color-ink-700: #4a4843;
+  --color-ink-800: #302e2b;
+  --color-ink-900: #1a1917;
+  --color-paper: #faf9f7;
+
+  /* ── Tipografía ────────────────────────────────────────── */
+  --font-display: var(--font-display-src), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-body-src), ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Ritmo y forma ─────────────────────────────────────── */
+  --radius-card: 2px;
+  --shadow-lift: 0 1px 2px rgb(26 25 23 / 0.04), 0 12px 32px -12px rgb(26 25 23 / 0.16);
+  --shadow-float: 0 4px 16px rgb(26 25 23 / 0.16), 0 24px 48px -16px rgb(26 25 23 / 0.24);
+
+  /* Curva única para todo el movimiento del sitio. */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Alto del header, para offsets de scroll y del mega menú. */
+  --header-h: 76px;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  color-scheme: light;
+  scroll-behavior: smooth;
+  /* Que los anclajes no queden debajo del header fijo. */
+  scroll-padding-top: calc(var(--header-h) + 16px);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink-900);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Bloquea el scroll del fondo cuando hay drawer o menú abierto. */
+body[data-scroll-locked="true"] {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-brand-600);
+  color: white;
+}
+
+/* Foco visible y consistente para navegación por teclado. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Utilidades del sistema
+   ============================================================ */
+
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 88rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 3rem;
+  }
+}
+
+/* Titular de sección: escala fluida sin media queries. */
+@utility heading-hero {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+}
+
+@utility heading-section {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.875rem, 4vw, 3.25rem);
+}
+
+/* Etiqueta pequeña en versalitas, usada arriba de cada sección. */
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Accesibilidad: respetar "reducir movimiento".
+   Toda animación del sitio pasa por aquí, incluidas las de Framer
+   Motion, que leen la preferencia por su cuenta.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

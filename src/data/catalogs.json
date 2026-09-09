@@ -1,0 +1,156 @@
+[
+  {
+    "slug": "general-2022",
+    "title": "Catálogo general",
+    "summary": "La línea completa: escritorios, sillería, recepciones y archivo.",
+    "pdf": "/catalogos/general-2022.pdf",
+    "sizeBytes": 8920253,
+    "featured": true,
+    "cover": {
+      "src": "/catalogos/general-2022.webp",
+      "width": 800,
+      "height": 991,
+      "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
+    }
+  },
+  {
+    "slug": "distribuidores",
+    "title": "Catálogo para distribuidores",
+    "summary": "Condiciones y línea disponible para reventa y proyectos.",
+    "pdf": "/catalogos/distribuidores.pdf",
+    "sizeBytes": 11922849,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/distribuidores.webp",
+      "width": 800,
+      "height": 1035,
+      "blurDataURL": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAAAQBACdASoQABUAPu1iqU2ppaOiMAgBMB2JQBTisYTWzwULi1jtvlGlWAD+1xnQNZm2S+mEIBOaQeruZ+Ismfnfo3wn/9md29bq9SKjLxhxzSNx/V/bQBPZhBvaEhsJf/VfBubFqjddgPOqWmgRy8g/tO4QkWmBDG4AAA=="
+    }
+  },
+  {
+    "slug": "sillas-versa",
+    "title": "Sillas de oficina · Versa",
+    "summary": "Sillería operativa y ejecutiva de la línea Versa.",
+    "pdf": "/catalogos/sillas-versa.pdf",
+    "sizeBytes": 18452688,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/sillas-versa.webp",
+      "width": 800,
+      "height": 1025,
+      "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JZwDCgB6GNUkAGRI30AD+7jEv3KSQdS49QdYiN37xUW4x9FLibOHTLTcdNPBATwMBwkZq0BCfs5BE36GcnogIhmJWqOPffLix4bRqNW3ZwKPFImUu87gAAAA="
+    }
+  },
+  {
+    "slug": "sillones",
+    "title": "Sillones",
+    "summary": "Sillones directivos, ejecutivos y de sala de espera.",
+    "pdf": "/catalogos/sillones.pdf",
+    "sizeBytes": 6410711,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/sillones.webp",
+      "width": 800,
+      "height": 1035,
+      "blurDataURL": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACwAwCdASoQABUAPu1mqk2ppaQiMAgBMB2JbAC/OBufReCikhfoxADif/wRNL+zmPMNElKATLFNCQ+cssz+jF/SaLz9ojgmQZDOmXCWzb208iZNQl1GAj9Xjqd+XYAA"
+    }
+  },
+  {
+    "slug": "muebles-metalicos",
+    "title": "Muebles metálicos",
+    "summary": "Lockers, archiveros, anaqueles y guardado en lámina.",
+    "pdf": "/catalogos/muebles-metalicos.pdf",
+    "sizeBytes": 1089957,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/muebles-metalicos.webp",
+      "width": 800,
+      "height": 600,
+      "blurDataURL": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAQCdASoQAAwAA4BaJYgCw7Dt2A4AAP62rgTpH9ShZlWwW0NHYTd6r+Ut1pCDwXu3Arj3J6L7ddj/xEO2ngOqgwHW5B3e1udl16dEuGsYdQbBK6d1R700YJAAAA=="
+    }
+  },
+  {
+    "slug": "linea-wood",
+    "title": "Línea Wood",
+    "summary": "Acabados en madera para dirección y salas de junta.",
+    "pdf": "/catalogos/linea-wood.pdf",
+    "sizeBytes": 14624268,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/linea-wood.webp",
+      "width": 800,
+      "height": 626,
+      "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADQAgCdASoQAA0AA4BaJZAC7H8Agk91Wb7EVvvGN6caAP7qqnmpIg8jARFNvP7qu69gU0VMqNTUsmuPZ0h8NJ1QGxkCBUuOji1KIf06BQ+jsLE04NhU/9QiNq/SnrzWk0/MSv4wsyk2nKRF11/X3WW6yqGZH0AA"
+    }
+  },
+  {
+    "slug": "linea-9",
+    "title": "Línea 9",
+    "summary": "Estaciones y centros de trabajo modulares.",
+    "pdf": "/catalogos/linea-9.pdf",
+    "sizeBytes": 3607307,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/linea-9.webp",
+      "width": 800,
+      "height": 1035,
+      "blurDataURL": "data:image/webp;base64,UklGRsIAAABXRUJQVlA4ILYAAAAwBACdASoQABUAPu1iqU2ppaQiMAgBMB2JaAC/OywBfMfey/CQFmfPMCYA/tgTVtU1YjcZ/lWf7+CWw8Yyl6SLP0FWmrMESzCrwfc+DvQVoYk4qDRrAj8t8JYogQfzHRM3mfgXu1qViBMPl5G111r64n/N+5RXB48UjRY6Qra5/wKADhHcmdpzB93OfflW9pdscEVn7/1jbesDbwWqneP1P/gnHX/3P/X79Wy4DF/6tBb+Ti+AAA=="
+    }
+  },
+  {
+    "slug": "gcm-2022",
+    "title": "Línea GCM",
+    "summary": "Mobiliario ejecutivo y de dirección.",
+    "pdf": "/catalogos/gcm-2022.pdf",
+    "sizeBytes": 62275773,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/gcm-2022.webp",
+      "width": 800,
+      "height": 1035,
+      "blurDataURL": "data:image/webp;base64,UklGRrAAAABXRUJQVlA4IKQAAADwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JZgCdABYq1gCdCAbxKVMAAPi00XwV97eW2IOzo9y52bzQZ1egr5WfKYCPOupIUunDzCZaZmDMcMe8+TREK4BdnhXsYVLZk0nsnXINOqNOksMsVjeBYcDde2LCuPiTI8TJRCqEXjlLDG96ypH/KBRH044pjQO3hANr0zQIJn8mz33Au9zL2RxkhYAAAA=="
+    }
+  },
+  {
+    "slug": "vandsk",
+    "title": "Vandsk",
+    "summary": "Colección de diseño escandinavo para oficina.",
+    "pdf": "/catalogos/vandsk.pdf",
+    "sizeBytes": 4430163,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/vandsk.webp",
+      "width": 800,
+      "height": 1042,
+      "blurDataURL": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAADwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JaACdMoACqvQZeI/boKgwAP0ePhcC5PARASh3iWD2wgckayx0tRid9nMDZUtFbd3DdK+T82W5RkzbftFNcCO+dQww6TBKEspoYhNPFtw6msUxvNFkKNKWN7/N6i26cgmprlBOCQBGAAAA"
+    }
+  },
+  {
+    "slug": "sivant",
+    "title": "Sivant",
+    "summary": "Sillería de visita y colectiva.",
+    "pdf": "/catalogos/sivant.pdf",
+    "sizeBytes": 10857291,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/sivant.webp",
+      "width": 800,
+      "height": 1035,
+      "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADwAwCdASoQABUAPu1kqk4ppaQiMAgBMB2JZQDA3CHgCMJnDmfHotqwAP7yNESg+bu7iNZ3ItnIjx35cpDJfnUPqQoYgKvRTscgT+B95/s270PXsf09nyrjf3y487MxT41SsB5pKHuYpdjp6J2/E2J7H36WtEAA"
+    }
+  },
+  {
+    "slug": "divetro",
+    "title": "Divetro",
+    "summary": "Mamparas y divisiones de cristal.",
+    "pdf": "/catalogos/divetro.pdf",
+    "sizeBytes": 3849914,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/divetro.webp",
+      "width": 800,
+      "height": 1025,
+      "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JaQAAWvYyUEJhujWOyAD+3/TqbTZZXUUSyEZQK3Rw1H8r4jPrQex2lbmfy2i+sATTC72ixK0w1nUjeIZpy3mYsqiA7TbBTk+9p55luZAAAA=="
+    }
+  }
+]

@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Detalle de vulnerabilidades del sitio en producción: no se publica.
+SEGURIDAD-LOCAL.md
