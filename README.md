@@ -96,4 +96,5 @@ node scripts/make-placeholder-model.mjs   # GLB de prueba a escala real
   responsable de datos y revisión legal.
 - **Datos de contacto.** Los `TODO(cliente)` de `src/lib/site.ts`.
 
-Ver `PROYECTO.md` para el detalle de decisiones y pendientes.
+Ver `HANDOFF.md` para retomar el proyecto (historia, decisiones, trampas
+conocidas y cómo verificar) y `PROYECTO.md` para el resumen de estado.

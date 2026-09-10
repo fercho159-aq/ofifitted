@@ -4,6 +4,10 @@ Rediseño de ofifitted.com. Reemplaza el WordPress + Divi/Hub actual por un
 sitio estático en Next.js, con catálogo navegable, visor 3D de producto y
 conversión por WhatsApp.
 
+> Para retomar el proyecto —persona o IA— empieza por **`HANDOFF.md`**: tiene
+> la historia completa, las trampas conocidas y cómo verificar cada cambio.
+> Este archivo es el resumen de estado y decisiones.
+
 ---
 
 ## Estado
@@ -26,6 +30,7 @@ conversión por WhatsApp.
 | Aviso de privacidad | Borrador, falta revisión legal |
 | 404 | Hecho |
 | Prueba social y testimonios | Estructura hecha; **falta contenido real** |
+| Deploy en Vercel | Arreglo subido; **falta confirmar** que el deploy pasó |
 
 Build actual: **685 páginas estáticas**.
 
