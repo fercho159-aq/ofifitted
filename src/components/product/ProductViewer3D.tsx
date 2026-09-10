@@ -28,8 +28,16 @@ type Props = {
   poster: string;
 };
 
+const VIEWS = [
+  { label: "Frente", orbit: "0deg 75deg auto" },
+  { label: "Lateral", orbit: "90deg 75deg auto" },
+  { label: "Atrás", orbit: "180deg 75deg auto" },
+  { label: "Arriba", orbit: "0deg 10deg auto" },
+] as const;
+
 export function ProductViewer3D({ model, productTitle, poster }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const viewerRef = useRef<HTMLElement>(null);
   const [libraryReady, setLibraryReady] = useState(false);
   const [arAvailable, setArAvailable] = useState(false);
   const [error, setError] = useState(false);
@@ -67,6 +75,7 @@ export function ProductViewer3D({ model, productTitle, poster }: Props) {
           {/* Custom element; sus atributos están tipados en
               src/types/model-viewer.d.ts */}
           <model-viewer
+            ref={(el: HTMLElement | null) => { viewerRef.current = el; }}
             src={model.glb}
             ios-src={model.usdz}
             poster={poster}
@@ -93,6 +102,20 @@ export function ProductViewer3D({ model, productTitle, poster }: Props) {
             }}
             onError={() => setError(true)}
           />
+
+          {/* Vistas predefinidas */}
+          <div className="absolute top-3 right-3 flex flex-wrap justify-end gap-1">
+            {VIEWS.map((v) => (
+              <button
+                key={v.label}
+                type="button"
+                onClick={() => viewerRef.current?.setAttribute("camera-orbit", v.orbit)}
+                className="bg-white/90 px-2.5 py-1.5 text-[11px] font-medium text-ink-700 shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
+              >
+                {v.label}
+              </button>
+            ))}
+          </div>
 
           {model.demo && (
             <p className="absolute top-3 left-3 bg-amber-400 px-2.5 py-1 text-[11px] font-medium text-ink-900">

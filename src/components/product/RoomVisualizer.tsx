@@ -45,6 +45,13 @@ const MAX_SCALE = 2.6;
 const EXPORT_MAX = 2400;
 const MAX_UPLOAD_MB = 25;
 
+const VIEWS = [
+  { label: "Frente", orbit: "0deg 75deg auto" },
+  { label: "Lateral", orbit: "90deg 75deg auto" },
+  { label: "Atrás", orbit: "180deg 75deg auto" },
+  { label: "Arriba", orbit: "0deg 10deg auto" },
+] as const;
+
 /** Rectángulo donde queda la foto dentro del escenario (object-contain). */
 function containRect(stage: Size, photo: Size) {
   if (!stage.w || !photo.w) return { x: 0, y: 0, w: 0, h: 0, k: 1 };
@@ -510,8 +517,6 @@ export function RoomVisualizer({ product, open, onClose }: Props) {
                               disable-zoom
                               interaction-prompt="none"
                               camera-orbit="-30deg 72deg auto"
-                              min-camera-orbit="auto 35deg auto"
-                              max-camera-orbit="auto 95deg auto"
                               shadow-intensity="1"
                               shadow-softness="0.9"
                               exposure="1.05"
@@ -574,6 +579,7 @@ export function RoomVisualizer({ product, open, onClose }: Props) {
                   onFlip={() => setFlip((f) => !f)}
                   mode={mode}
                   onMode={setMode}
+                  onView={(orbit) => viewerRef.current?.setAttribute("camera-orbit", orbit)}
                   onReset={reset}
                   onChangePhoto={() => inputRef.current?.click()}
                   onAction={run}
@@ -694,6 +700,7 @@ function Controls({
   onFlip,
   mode,
   onMode,
+  onView,
   onReset,
   onChangePhoto,
   onAction,
@@ -708,6 +715,7 @@ function Controls({
   onFlip: () => void;
   mode: "mover" | "girar";
   onMode: (m: "mover" | "girar") => void;
+  onView: (orbit: string) => void;
   onReset: () => void;
   onChangePhoto: () => void;
   onAction: (a: "descargar" | "compartir" | "cotizar") => void;
@@ -735,6 +743,25 @@ function Controls({
               {m}
             </button>
           ))}
+        </div>
+      )}
+
+      {/* Vistas predefinidas (solo 3D) */}
+      {kind === "model" && (
+        <div>
+          <span className="eyebrow mb-2 block text-xs text-white/50">Vista</span>
+          <div className="grid grid-cols-4 gap-1">
+            {VIEWS.map((v) => (
+              <button
+                key={v.label}
+                type="button"
+                onClick={() => onView(v.orbit)}
+                className="bg-white/5 py-2 text-xs font-medium text-white/70 transition-colors hover:bg-white/15 hover:text-white"
+              >
+                {v.label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
