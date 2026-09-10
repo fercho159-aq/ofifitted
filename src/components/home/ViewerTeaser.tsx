@@ -6,29 +6,42 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Parallax } from "@/components/ui/ScrollFx";
 
 /**
- * Anuncio del visor 3D.
+ * Anuncio de "Pruébalo en tu oficina".
  *
- * Solo se dibuja si hay al menos un producto con modelo. Mientras Ofifitted
- * no entregue los GLB, la home no promete una función que no existe.
+ * La ilustración explica la función sin palabras: una escena genérica —muro
+ * y piso dibujados con CSS— con el mueble recortado apoyado en ella y el
+ * marco de una foto de celular encima. No se usa una foto de oficina real
+ * porque todas las del catálogo ya traen muebles.
+ *
+ * Solo se dibuja si hay algún producto con recorte o modelo.
  */
-export function ViewerTeaser({ product }: { product: Product | null }) {
-  if (!product) return null;
-
-  const cover = product.images[0];
+export function ViewerTeaser({
+  product,
+  total,
+}: {
+  product: Product | null;
+  total: number;
+}) {
+  if (!product?.cutout) return null;
+  const { cutout } = product;
 
   return (
     <section className="relative overflow-hidden border-y border-ink-200 bg-ink-50">
       <div className="container-page grid gap-12 py-20 md:py-28 lg:grid-cols-2 lg:items-center lg:gap-16">
         <div>
           <Reveal>
-            <p className="eyebrow text-accent-600">Nuevo</p>
+            <p className="eyebrow text-accent-600">Nuevo · Pruébalo en tu oficina</p>
             <h2 className="heading-section mt-3">
-              Míralo en tu oficina antes de pedirlo.
+              Toma una foto de tu espacio. Pon el mueble. Decide.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-ink-600">
-              Los modelos con visor 3D se pueden girar, acercar y —desde el
-              celular— colocar a escala real en tu propio espacio con la
-              cámara. Deja de imaginarte si cabe: compruébalo.
+              Sube una foto de tu oficina, coloca el mueble donde lo imaginas y
+              ajústalo al tamaño. Deja de adivinar si combina: mándanos la
+              imagen y cotizamos sobre eso.
+            </p>
+            <p className="mt-3 text-sm text-ink-500">
+              Disponible en {total} modelos del catálogo. Tu foto no se sube a
+              ningún servidor.
             </p>
           </Reveal>
 
@@ -37,44 +50,57 @@ export function ViewerTeaser({ product }: { product: Product | null }) {
               href={`/producto/${product.slug}`}
               className="mt-8 inline-flex items-center gap-2 bg-brand-600 px-7 py-4 text-sm font-medium text-white transition-colors hover:bg-brand-700"
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden>
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden>
                 <path
-                  d="M12 2l9 5v10l-9 5-9-5V7l9-5zM3 7l9 5 9-5M12 12v10"
+                  d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 100-8 4 4 0 000 8z"
                   stroke="currentColor"
                   strokeWidth="1.7"
                   fill="none"
                   strokeLinejoin="round"
                 />
               </svg>
-              Probar el visor 3D
+              Probarlo con un escritorio
             </Link>
           </Reveal>
         </div>
 
-        <Parallax distance={40}>
-          <div className="relative aspect-4/3 bg-white">
-            {cover && (
+        <Parallax distance={36}>
+          <div className="relative mx-auto aspect-4/3 w-full max-w-xl overflow-hidden rounded-sm shadow-[var(--shadow-float)]">
+            {/* Escena: muro y piso */}
+            <div aria-hidden className="absolute inset-0 bg-linear-to-b from-[#ebe6df] to-[#ddd6cc]" />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-[34%] bg-linear-to-b from-[#b89877] to-[#9c7b5b]"
+            />
+            <div aria-hidden className="absolute inset-x-0 bottom-[34%] h-px bg-black/10" />
+
+            {/* El mueble, apoyado en el piso */}
+            <div className="absolute bottom-[12%] left-1/2 w-[52%] -translate-x-1/2 drop-shadow-[0_6px_10px_rgba(0,0,0,0.3)]">
               <Image
-                src={cover.src}
+                src={cutout.src}
                 alt={product.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                placeholder="blur"
-                blurDataURL={cover.blurDataURL}
-                className="object-contain p-10"
+                width={cutout.width}
+                height={cutout.height}
+                sizes="(max-width: 1024px) 50vw, 300px"
+                className="h-auto w-full"
               />
-            )}
-            <span className="absolute top-4 left-4 flex items-center gap-1.5 bg-brand-600 px-3 py-1.5 text-[10px] font-medium tracking-wide text-white uppercase">
-              <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden>
-                <path
-                  d="M12 2l9 5v10l-9 5-9-5V7l9-5zM3 7l9 5 9-5M12 12v10"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  fill="none"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              Ver en 3D
+            </div>
+
+            {/* Marco de "foto": esquinas de visor de cámara */}
+            <div aria-hidden className="pointer-events-none absolute inset-4">
+              {[
+                "top-0 left-0 border-t-2 border-l-2",
+                "top-0 right-0 border-t-2 border-r-2",
+                "bottom-0 left-0 border-b-2 border-l-2",
+                "bottom-0 right-0 border-b-2 border-r-2",
+              ].map((corner) => (
+                <span key={corner} className={`absolute h-6 w-6 border-white/90 ${corner}`} />
+              ))}
+            </div>
+
+            <span className="absolute top-6 left-6 flex items-center gap-1.5 bg-ink-900/80 px-2.5 py-1 text-[10px] font-medium tracking-wide text-white uppercase backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent-500" aria-hidden />
+              Tu foto
             </span>
           </div>
         </Parallax>

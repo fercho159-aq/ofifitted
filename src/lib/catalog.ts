@@ -6,6 +6,7 @@
  * catálogo se mueva a un CMS, solo cambia este archivo.
  */
 import rawCatalog from "@/data/catalog.json";
+import cutoutsData from "@/data/cutouts.json";
 import { displayName, HIDDEN_CATEGORY_SLUGS } from "./taxonomy";
 
 export type ProductImage = {
@@ -30,6 +31,13 @@ export type Product = {
    * mientras tanto es null y la ficha degrada a galería de fotos.
    */
   model: ProductModel | null;
+  /**
+   * El producto recortado de su fondo, para pegarlo sobre la foto que sube
+   * el cliente en "Pruébalo en tu oficina". Lo genera
+   * `scripts/make-cutouts.mjs`; es null cuando la foto es de ambiente y no
+   * hay fondo que quitar.
+   */
+  cutout: ProductCutout | null;
 };
 
 export type ProductModel = {
@@ -39,6 +47,18 @@ export type ProductModel = {
   usdz?: string;
   /** Dimensiones reales en centímetros, para la ficha técnica. */
   dimensions?: { width: number; depth: number; height: number };
+  /**
+   * Modelo genérico de prueba, no el del producto. Se muestra con una
+   * etiqueta visible para que nadie crea que ese es el mueble que va a
+   * recibir.
+   */
+  demo?: boolean;
+};
+
+export type ProductCutout = {
+  src: string;
+  width: number;
+  height: number;
 };
 
 export type Category = {
@@ -67,8 +87,11 @@ const MODELS: Record<string, ProductModel> = {
   "escritorio-dak-2": {
     glb: "/models/escritorio-demo.glb",
     dimensions: { width: 160, depth: 70, height: 75 },
+    demo: true,
   },
 };
+
+const CUTOUTS = cutoutsData as Record<string, ProductCutout & { fromImage: number }>;
 
 /* ── Normalización ───────────────────────────────────────────────────── */
 
@@ -95,6 +118,13 @@ function toProduct(p: RawProduct): Product {
     images: p.images as ProductImage[],
     createdAt: p.createdAt,
     model: MODELS[p.slug] ?? null,
+    cutout: CUTOUTS[p.slug]
+      ? {
+          src: CUTOUTS[p.slug].src,
+          width: CUTOUTS[p.slug].width,
+          height: CUTOUTS[p.slug].height,
+        }
+      : null,
   };
 }
 
@@ -195,8 +225,14 @@ export function getProductsWithModel(): Product[] {
   return allProducts.filter((p) => p.model !== null);
 }
 
+/** Productos que se pueden probar sobre una foto: con recorte o con modelo. */
+export function getVisualizableProducts(): Product[] {
+  return allProducts.filter((p) => p.cutout !== null || p.model !== null);
+}
+
 export const catalogStats = {
   products: allProducts.length,
   categories: getCategories().length,
   withModel: allProducts.filter((p) => p.model).length,
+  visualizable: allProducts.filter((p) => p.cutout || p.model).length,
 };

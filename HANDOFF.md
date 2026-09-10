@@ -3,7 +3,7 @@
 Documento para quien retome este proyecto, persona o IA. Resume todo lo que se
 hizo, por qué se hizo así, qué quedó pendiente y dónde están las trampas.
 
-Última actualización: 10 de septiembre de 2026.
+Última actualización: 10 de septiembre de 2026, tras la primera ronda de feedback del cliente.
 
 > **Si eres una IA:** lee este archivo completo antes de tocar código. La
 > sección [Reglas que no se rompen](#reglas-que-no-se-rompen) y la de
@@ -42,6 +42,8 @@ un sitio estático en **Next.js 16**, con:
 - Copy de venta con estructura PASTOR en la home.
 - Animaciones de entrada y ligadas al progreso del scroll.
 - Botón flotante de WhatsApp con disparador.
+- **"Pruébalo en tu oficina":** el cliente sube una foto de su espacio y coloca
+  el mueble encima. Disponible en 461 productos.
 - Visor 3D de producto con realidad aumentada nativa.
 - Conversión 100% por WhatsApp: no hay carrito ni checkout.
 
@@ -53,9 +55,11 @@ un sitio estático en **Next.js 16**, con:
 |---|---|
 | Código del sitio | Completo. 685 páginas estáticas, typecheck y lint limpios |
 | Repositorio en GitHub | Subido, rama `main` |
-| Deploy en Vercel | **Sin confirmar.** El primer intento falló (ver abajo); el arreglo está subido pero nadie ha confirmado que el siguiente deploy haya pasado |
+| Deploy en Vercel | Funcionando. El cliente ya revisó una versión con la tipografía nueva (commit `c228e56` o posterior) |
 | Testimonios / prueba social | Estructura hecha; contenido de muestra **no publicable** |
-| Modelos 3D | Solo hay uno de prueba. Los reales los va a entregar el cliente |
+| Visualizador sobre foto | Hecho: 461 productos con recorte, más el modelo de demostración |
+| Modelos 3D | Solo hay uno de prueba, etiquetado como demostración. Los reales los entrega el cliente |
+| Redes sociales | Espacio listo en header y footer; **faltan las URLs** (el cliente no ha decidido cuáles) |
 | Catálogos PDF | Publicados, pero pesan 140 MB y hay que optimizarlos |
 | Aviso de privacidad | Borrador técnico, falta revisión legal |
 | Dominio | Sin conectar. ofifitted.com sigue apuntando al WordPress |
@@ -67,10 +71,11 @@ conflicto de peer dependency con `three`. Se corrigió en `fb9d8b6`, verificado
 replicando el pipeline de Vercel en un árbol limpio (`npm ci` + `next build`).
 Después se subió `c228e56` (cambio de tipografía).
 
-**Lo que falta confirmar:** que Vercel haya construido `fb9d8b6` o posterior y
-que haya pasado. Si ves un error de `three@0.183.2` en los logs, casi seguro
-estás mirando el deploy viejo: revisa la marca de tiempo y el commit. No uses
-*Redeploy* sobre el deploy fallido, porque Vercel reconstruye ese mismo commit.
+Ya funciona: las capturas del feedback del cliente muestran los titulares en
+Oswald, que entró en `c228e56`. Si alguna vez ves un error de `three@0.183.2`
+en los logs, casi seguro es el deploy viejo: revisa la marca de tiempo y el
+commit. No uses *Redeploy* sobre un deploy fallido, porque Vercel reconstruye
+ese mismo commit.
 
 ---
 
@@ -181,6 +186,50 @@ descubrió que **las tipografías nunca se habían aplicado**: el sitio renderiz
 en Segoe UI desde el principio. Se corrigió. Además, Poppins es más ancha y
 desbordaba la navegación; se ajustó.
 
+### 9. Primera ronda de feedback del cliente
+
+Llegó por WhatsApp, con capturas. Tres puntos:
+
+1. **"Esto fue lo que no me había gustado"** — la sección de problemas de la
+   home. En móvil era una pila de cuatro bloques de texto con rayas negras
+   gruesas: se leía como documento. Se rehízo: titular más corto, tarjetas con
+   ícono, carrusel horizontal en móvil (la sección bajó a una pantalla) y un
+   bloque oscuro para la amplificación. **Supuesto:** que lo que no gustó fue
+   lo visual. Si era el tono del copy (hablar de fallas), hay que ajustar el
+   texto, no el diseño.
+2. **"No le entiendo al 3D"** — el cliente vio el visor que solo gira el
+   modelo, y esperaba "tomar una foto y ver cómo se vería el escritorio ahí",
+   que es lo que le habían explicado. Se construyó el visualizador sobre foto
+   (ver abajo). Además, el visor mostraba el escritorio genérico de prueba bajo
+   el nombre "ESCRITORIO DAK", que no se parece al real: ahora lleva una
+   etiqueta visible de "Modelo de demostración".
+3. **Redes sociales** (Facebook, Instagram, TikTok) arriba y abajo. El cliente
+   aún no sabe cuáles va a usar.
+
+#### Cómo funciona "Pruébalo en tu oficina"
+
+Es la idea del compositor de ebehar, adaptada a muebles:
+
+- El cliente toma o sube una foto. **La foto nunca sale de su dispositivo**: se
+  lee como blob local y se compone en un `<canvas>`.
+- Coloca el mueble arrastrando, lo escala con el control, pellizcando o con la
+  rueda del mouse, y puede **voltearlo** (espejo) para orientarlo como en su
+  espacio.
+- Si el producto tiene **modelo 3D**, el mueble se pinta con `<model-viewer>`
+  de fondo transparente sobre la foto y hay un modo "Girar" para empatar la
+  perspectiva, algo que un recorte plano no permite.
+- Si no, usa el **recorte** del producto: la foto de estudio sin fondo, generada
+  en build por `scripts/make-cutouts.mjs`.
+- Exporta un JPG a la resolución de la foto original. "Cotizar por WhatsApp"
+  guarda la imagen y abre el chat con el mensaje escrito (WhatsApp no deja
+  adjuntar por URL). En móvil también ofrece el menú nativo de compartir.
+
+Recortes: 461 de 644 productos. Los demás tienen solo fotos de ambiente —una
+oficina completa—, donde no hay un fondo que quitar; a esos no se les ofrece el
+botón. El punto débil conocido son los **muebles blancos o gris claro sobre
+fondo blanco**, a los que el relleno les come parte de las caras. Si el cliente
+ve uno mal, su slug va a `EXCLUDE_SLUGS` en el script.
+
 ---
 
 ## Decisiones
@@ -214,6 +263,15 @@ desbordaba la navegación; se ajustó.
   silencio.
 - **Una sola curva de movimiento** (`cubic-bezier(0.22, 1, 0.36, 1)`) y tres
   duraciones, en `src/lib/motion.ts`.
+- **Los recortes se generan en build, no en el navegador.** El cliente no gasta
+  batería ni espera, la calidad es la misma para todos y el resultado se puede
+  revisar antes de publicar.
+- **Las sombras del recorte son negro semitransparente**, no gris. Un gris
+  claro semitransparente *aclara* un piso oscuro y la sombra se ve como una
+  mancha lechosa; una sombra real solo oscurece.
+- **Las redes sin URL se dibujan inertes**, con "Próximamente", en vez de
+  adivinar el perfil. Un `facebook.com/ofifitted` inventado podría mandar a la
+  gente a una cuenta que no es de Ofifitted.
 
 ---
 
@@ -364,6 +422,37 @@ Lee `node_modules/next/dist/docs/` antes de escribir código. Lo que ya afectó:
 - `next dev` reescribe el bloque entre marcadores de `AGENTS.md`. Lo que esté
   fuera de los marcadores se conserva.
 
+### El primer aviso de `ResizeObserver` llega tarde
+
+`ResizeObserver` entrega su primera medición en el ciclo de pintado. Si un
+componente depende solo de él para saber su tamaño, se dibuja en 0×0 hasta ese
+aviso, y en una pestaña en segundo plano puede no llegar. Pasó en el
+visualizador: la foto cargaba y el mueble no aparecía.
+
+Solución (ver `RoomVisualizer.tsx`): un **ref de callback** que mide con
+`getBoundingClientRect()` de inmediato y deja el observer solo para cambios
+posteriores. React 19 permite que el ref devuelva su función de limpieza.
+
+### `model-viewer.toBlob()` puede salir vacío
+
+Captura el último cuadro que pintó. Si todavía no pinta ninguno, el PNG es 100%
+transparente y la exportación sale como la foto sin el mueble, sin ningún
+error. `RoomVisualizer.tsx` revisa si la captura está vacía y, si lo está,
+avisa al usuario en vez de exportar.
+
+### Carrusel con `snap` sin `scroll-padding`
+
+En un carrusel horizontal con `snap-x`, el navegador alinea la primera tarjeta
+contra el borde del contenedor e ignora el `padding`: queda pegada a la orilla
+de la pantalla. Hace falta `scroll-px-*` con el mismo valor que el padding.
+
+### Capturas después de hacer scroll
+
+En el navegador del agente, las capturas tomadas después de un `scrollTo` salen
+en blanco: el pane no repinta. Para ver una sección de más abajo, oculta las
+anteriores (`section.style.display = 'none'`) y captura con la página arriba.
+Los diálogos `fixed` sí se capturan bien.
+
 ### Windows y el backup
 
 Solo afecta a los scripts de datos:
@@ -438,6 +527,29 @@ Después de `npm run build`:
 grep -F "Contenido de muestra" .next/server/app/index.html   # no debe encontrar nada
 ```
 
+### El visualizador sobre foto
+
+No se puede elegir un archivo desde el agente, pero se puede simular:
+
+```js
+[...document.querySelectorAll('button')]
+  .find(b => b.textContent.includes('Pruébalo en tu oficina')).click();
+// esperar a que abra el diálogo, y luego:
+const input = document.querySelector('[role="dialog"] input[type="file"]');
+const blob = await (await fetch('/products/aire-bala-2/0.webp')).blob();
+const dt = new DataTransfer();
+dt.items.add(new File([blob], 'oficina.webp', { type: 'image/webp' }));
+input.files = dt.files;
+input.dispatchEvent(new Event('change', { bubbles: true }));
+```
+
+Para probar la exportación, intercepta `URL.createObjectURL` y guarda el blob
+JPEG que se crea al pulsar "Descargar imagen": la URL se revoca al segundo.
+
+Para revisar la calidad de los recortes, compónlos sobre un fondo de cuadros de
+color **y** sobre un piso oscuro. Los cuadros enseñan si queda blanco pegado; el
+piso oscuro enseña si las sombras aclaran en vez de oscurecer.
+
 ### El visor 3D
 
 En `/producto/escritorio-dak-2`, abre la pestaña "Ver en 3D" y en consola:
@@ -467,6 +579,14 @@ mv.getDimensions()       // { x: 1.6, y: 0.75, z: 0.7 }
   clientes. Acceso a Google Business si tienen reseñas. **Fotos de
   instalaciones terminadas.**
 - **Cifras de empresa:** años fabricando, oficinas equipadas, m² de planta.
+- **URLs de redes sociales.** Facebook, Instagram y TikTok están en `socials`
+  de `src/lib/site.ts` con `url: null`. Al llenarlas, el ícono se vuelve enlace
+  solo.
+- **Revisión de recortes.** Que el cliente recorra el catálogo y señale los
+  productos donde el mueble se vea mal en el visualizador (sobre todo los
+  blancos). Van a `EXCLUDE_SLUGS` en `scripts/make-cutouts.mjs`.
+- **Confirmar qué no le gustó de la sección de problemas:** si el diseño (ya
+  rehecho) o el tono del texto.
 - **Correo de contacto público.** El de WordPress es una cuenta de la agencia.
 - **Confirmar** teléfonos, direcciones, horario y redes sociales.
 - **Aviso de privacidad:** razón social, domicilio fiscal, responsable de datos
@@ -496,7 +616,11 @@ mv.getDimensions()       // { x: 1.6, y: 0.75, z: 0.7 }
   Los slugs de producto y categoría se conservaron iguales, así que el mapeo
   es directo.
 - **Cargar modelos 3D** en el mapa `MODELS` de `src/lib/catalog.ts` conforme
-  lleguen, y quitar el escritorio de prueba de `escritorio-dak-2`.
+  lleguen, y quitar el escritorio de prueba de `escritorio-dak-2`. Un producto
+  con modelo usa automáticamente el modo 3D en el visualizador sobre foto.
+- **Una foto de oficina vacía de ejemplo** en el visualizador, para que quien
+  lo pruebe en computadora sin una foto a la mano pueda verlo funcionar. Todas
+  las fotos del catálogo ya traen muebles, así que tendría que darla el cliente.
 - **Pipeline de ingesta 3D:** Blender en modo headless más `gltf-transform` para
   comprimir y validar cada modelo contra el presupuesto antes de publicarlo.
 - **Fase 2 del 3D — "Arma tu oficina":** escena con react-three-fiber donde se
@@ -602,6 +726,11 @@ const MODELS: Record<string, ProductModel> = {
 | `src/components/product/ProductViewer3D.tsx` | Visor 3D y botón de realidad aumentada |
 | `src/components/product/ProductMedia.tsx` | Pestañas fotos / 3D de la ficha |
 | `src/components/contact/QuoteForm.tsx` | Formulario que compone el mensaje de WhatsApp |
+| `src/components/product/RoomVisualizer.tsx` | "Pruébalo en tu oficina": foto + mueble + exportación |
+| `src/components/ui/SocialLinks.tsx` | Íconos de redes; los que no tienen URL salen como "Próximamente" |
+| `src/lib/model-viewer.ts` | Carga única y compartida de `<model-viewer>` |
+| `src/data/cutouts.json` | Qué productos tienen recorte (generado) |
+| `scripts/make-cutouts.mjs` | Recorta los productos de su fondo blanco. Aquí va `EXCLUDE_SLUGS` |
 | `scripts/import-media.mjs` | Imágenes del backup a WebP |
 | `scripts/import-catalogs.mjs` | PDF del backup y sus portadas |
 | `scripts/make-placeholder-model.mjs` | GLB de prueba |

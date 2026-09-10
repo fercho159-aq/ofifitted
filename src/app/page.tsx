@@ -9,8 +9,9 @@ import {
   catalogStats,
   getCategoryBySlug,
   getCategoryCover,
-  getProductsWithModel,
+  getProductBySlug,
   getRootCategories,
+  getVisualizableProducts,
 } from "@/lib/catalog";
 
 /**
@@ -34,7 +35,11 @@ export default function HomePage() {
     .slice(0, 7)
     .map((category) => ({ category, cover: getCategoryCover(category) }));
 
-  const [productWithModel = null] = getProductsWithModel();
+  // El anuncio del visualizador usa un escritorio con recorte limpio: fue el
+  // ejemplo con el que el cliente describió la función.
+  const visualizable = getVisualizableProducts();
+  const teaserProduct =
+    getProductBySlug("altus-2") ?? visualizable.find((p) => p.cutout) ?? null;
 
   return (
     <>
@@ -48,7 +53,7 @@ export default function HomePage() {
       <ProblemSection />
       <FactorySection image={factoryImage} />
       <CategoriesSection cards={cards} />
-      <ViewerTeaser product={productWithModel} />
+      <ViewerTeaser product={teaserProduct} total={visualizable.length} />
       <Testimonials />
       <OfferSection />
     </>

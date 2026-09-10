@@ -13,6 +13,12 @@ const ProductViewer3D = dynamic(
   { ssr: false }
 );
 
+// El visualizador solo se descarga cuando alguien lo abre.
+const RoomVisualizer = dynamic(
+  () => import("./RoomVisualizer").then((m) => m.RoomVisualizer),
+  { ssr: false }
+);
+
 /**
  * Bloque de medios de la ficha.
  *
@@ -23,8 +29,13 @@ const ProductViewer3D = dynamic(
 export function ProductMedia({ product }: { product: Product }) {
   const [active, setActive] = useState(0);
   const [tab, setTab] = useState<"fotos" | "3d">("fotos");
+  const [roomOpen, setRoomOpen] = useState(false);
+  // Se monta al primer clic y se queda montado: así cerrar y volver a abrir
+  // conserva la foto y la posición del mueble.
+  const [roomMounted, setRoomMounted] = useState(false);
 
   const has3D = product.model !== null;
+  const canVisualize = product.model !== null || product.cutout !== null;
   const cover = product.images[active] ?? product.images[0];
 
   return (
@@ -119,6 +130,47 @@ export function ProductMedia({ product }: { product: Product }) {
           </div>
         )}
       </div>
+
+      {canVisualize && (
+        <>
+          <button
+            type="button"
+            onClick={() => {
+              setRoomMounted(true);
+              setRoomOpen(true);
+            }}
+            className="group mt-4 flex w-full items-center gap-4 border border-brand-600 bg-brand-50 px-5 py-4 text-left transition-colors hover:bg-brand-600"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-brand-600 text-white transition-colors group-hover:bg-white group-hover:text-brand-600">
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+                <path
+                  d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 100-8 4 4 0 000 8z"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  fill="none"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+            <span>
+              <span className="block font-medium text-brand-700 transition-colors group-hover:text-white">
+                Pruébalo en tu oficina
+              </span>
+              <span className="block text-sm text-ink-600 transition-colors group-hover:text-white/80">
+                Toma una foto de tu espacio y mira cómo queda este mueble
+              </span>
+            </span>
+          </button>
+
+          {roomMounted && (
+            <RoomVisualizer
+              product={product}
+              open={roomOpen}
+              onClose={() => setRoomOpen(false)}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 }

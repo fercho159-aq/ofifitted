@@ -67,9 +67,25 @@ export const waMessages = {
   project: "Hola Ofifitted, quiero amueblar una oficina completa. ¿Me apoyan con una propuesta?",
   visualizer: (productTitle: string) =>
     `Hola Ofifitted, acabo de ver el ${productTitle} en 3D y me interesa cotizarlo.`,
+  roomPhoto: (productTitle: string) =>
+    `Hola Ofifitted, probé el ${productTitle} en una foto de mi oficina y me gustó cómo queda. Te comparto la imagen. ¿Me pueden cotizar?`,
 } as const;
 
-export const socials = {
-  facebook: "https://www.facebook.com/ofifitted",
-  instagram: "https://www.instagram.com/ofifitted",
-} as const;
+/**
+ * Redes sociales, en el orden en que se muestran en header y footer.
+ *
+ * TODO(cliente): el cliente todavía no define qué cuentas va a usar. Mientras
+ * una URL sea null, su ícono se dibuja para reservar el espacio pero no enlaza
+ * a ningún lado: adivinar el perfil (facebook.com/ofifitted…) podría mandar a
+ * la gente a una cuenta que no es de Ofifitted. En cuanto haya URL, el ícono
+ * se vuelve enlace solo.
+ *
+ * El sitio viejo no tenía ninguna de estas tres enlazada: se buscó en el dump.
+ */
+export type SocialNetwork = "facebook" | "instagram" | "tiktok";
+
+export const socials: { network: SocialNetwork; label: string; url: string | null }[] = [
+  { network: "facebook", label: "Facebook", url: null },
+  { network: "instagram", label: "Instagram", url: null },
+  { network: "tiktok", label: "TikTok", url: null },
+];

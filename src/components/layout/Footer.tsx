@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { SocialLinks } from "@/components/ui/SocialLinks";
 import { getRootCategories } from "@/lib/catalog";
 import { contact, site, waMessages, whatsappUrl } from "@/lib/site";
 import { navLinks } from "@/lib/taxonomy";
@@ -46,6 +47,8 @@ export function Footer() {
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-600">
             {site.description}
           </p>
+          <p className="eyebrow mt-6 mb-2 text-ink-400">Síguenos</p>
+          <SocialLinks className="-ml-2" />
         </div>
 
         <div>

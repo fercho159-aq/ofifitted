@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { SocialLinks } from "@/components/ui/SocialLinks";
 import { drawer, megaPanel, overlay } from "@/lib/motion";
 import { contact, waMessages, whatsappUrl } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -92,6 +93,8 @@ export function HeaderClient({ groups, links }: Props) {
                 {phone.label} {phone.value}
               </a>
             ))}
+            <span className="h-4 w-px bg-white/25" aria-hidden />
+            <SocialLinks tone="light" size="sm" className="-mr-1.5" />
           </div>
         </div>
       </div>
@@ -483,16 +486,19 @@ function MobileDrawer({
               >
                 Cotizar por WhatsApp
               </a>
-              <div className="mt-4 space-y-1">
-                {contact.phones.map((phone) => (
-                  <a
-                    key={phone.tel}
-                    href={`tel:${phone.tel}`}
-                    className="block text-sm text-ink-600"
-                  >
-                    {phone.label} · {phone.value}
-                  </a>
-                ))}
+              <div className="mt-4 flex items-end justify-between gap-4">
+                <div className="space-y-1">
+                  {contact.phones.map((phone) => (
+                    <a
+                      key={phone.tel}
+                      href={`tel:${phone.tel}`}
+                      className="block text-sm text-ink-600"
+                    >
+                      {phone.label} · {phone.value}
+                    </a>
+                  ))}
+                </div>
+                <SocialLinks className="-mr-2" />
               </div>
             </div>
           </motion.div>

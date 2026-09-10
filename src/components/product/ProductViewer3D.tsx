@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import type { ProductModel } from "@/lib/catalog";
 import { pop } from "@/lib/motion";
+import { loadModelViewer } from "@/lib/model-viewer";
 import { waMessages, whatsappUrl } from "@/lib/site";
 
 /* ────────────────────────────────────────────────────────────────────
@@ -43,7 +44,7 @@ export function ProductViewer3D({ model, productTitle, poster }: Props) {
   useEffect(() => {
     let cancelled = false;
 
-    import("@google/model-viewer")
+    loadModelViewer()
       .then(() => {
         if (!cancelled) setLibraryReady(true);
       })
@@ -93,6 +94,12 @@ export function ProductViewer3D({ model, productTitle, poster }: Props) {
             onError={() => setError(true)}
           />
 
+          {model.demo && (
+            <p className="absolute top-3 left-3 bg-amber-400 px-2.5 py-1 text-[11px] font-medium text-ink-900">
+              Modelo de demostración · no es el mueble real
+            </p>
+          )}
+
           {/* Pista de interacción */}
           <p className="pointer-events-none absolute bottom-3 left-3 text-[11px] tracking-wide text-ink-400 uppercase">
             Arrastra para girar · Pellizca para acercar
@@ -123,7 +130,7 @@ export function ProductViewer3D({ model, productTitle, poster }: Props) {
                     strokeLinejoin="round"
                   />
                 </svg>
-                Verlo en mi oficina
+                Verlo con la cámara
               </motion.button>
             )}
           </AnimatePresence>

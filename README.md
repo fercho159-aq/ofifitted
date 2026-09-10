@@ -81,6 +81,7 @@ desarrollar ni para desplegar**: su salida ya está versionada.
 node scripts/import-media.mjs             # imágenes del catálogo a WebP
 node scripts/import-catalogs.mjs          # catálogos PDF y sus portadas
 node scripts/make-placeholder-model.mjs   # GLB de prueba a escala real
+node scripts/make-cutouts.mjs             # recortes para "Pruébalo en tu oficina"
 ```
 
 ---
