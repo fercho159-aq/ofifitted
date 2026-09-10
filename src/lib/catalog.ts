@@ -89,6 +89,11 @@ const MODELS: Record<string, ProductModel> = {
     dimensions: { width: 160, depth: 70, height: 75 },
     demo: true,
   },
+  "silla-cartagena-alto-4": {
+    glb: "/models/silla-demo.glb",
+    dimensions: { width: 48, depth: 45, height: 111 },
+    demo: true,
+  },
 };
 
 const CUTOUTS = cutoutsData as Record<string, ProductCutout & { fromImage: number }>;
