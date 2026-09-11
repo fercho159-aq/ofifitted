@@ -202,6 +202,7 @@ export const megaMenu: MegaGroup[] = [
 /** Enlaces sueltos de la barra, a la derecha del mega menú. */
 export const navLinks = [
   { label: "Catálogos", href: "/catalogos" },
+  { label: "Proyectos", href: "/proyectos" },
   { label: "Nosotros", href: "/nosotros" },
   { label: "Contacto", href: "/contacto" },
 ] as const;

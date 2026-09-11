@@ -7,7 +7,6 @@ import { useRef } from "react";
 
 import type { ProductImage } from "@/lib/catalog";
 import { DURATION, EASE } from "@/lib/motion";
-import { waMessages, whatsappUrl } from "@/lib/site";
 
 type Props = {
   image: ProductImage;
@@ -91,9 +90,9 @@ export function Hero({ image, productCount, categoryCount }: Props) {
           transition={{ duration: DURATION.slow, ease: EASE, delay: 0.08 }}
           className="heading-hero mt-4 max-w-4xl text-white"
         >
-          No le compres a un revendedor.
+          Mobiliario de oficina
           <br />
-          <span className="text-white/60">Cómprale a quien lo fabrica.</span>
+          <span className="text-white/60">directo de fábrica.</span>
         </motion.h1>
 
         <motion.p
@@ -102,9 +101,8 @@ export function Hero({ image, productCount, categoryCount }: Props) {
           transition={{ duration: DURATION.base, ease: EASE, delay: 0.18 }}
           className="mt-6 max-w-xl text-base leading-relaxed text-white/75 md:text-lg"
         >
-          Escritorios, sillas y recepciones hechos en nuestra planta, a la
-          medida de tu espacio. Sin intermediarios que inflen el precio ni
-          alarguen la entrega.
+          Escritorios, sillas, recepciones y almacenamiento fabricados a tu
+          medida. Sin intermediarios, sin sobreprecio.
         </motion.p>
 
         <motion.div
@@ -113,19 +111,17 @@ export function Hero({ image, productCount, categoryCount }: Props) {
           transition={{ duration: DURATION.base, ease: EASE, delay: 0.26 }}
           className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
         >
-          <a
-            href={whatsappUrl(waMessages.project)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center bg-accent-600 px-8 py-4 text-sm font-medium text-white transition-colors hover:bg-accent-700"
-          >
-            Cotizar mi proyecto
-          </a>
           <Link
             href="/catalogo"
+            className="inline-flex items-center justify-center bg-accent-600 px-8 py-4 text-sm font-medium text-white transition-colors hover:bg-accent-700"
+          >
+            Ver catálogo
+          </Link>
+          <Link
+            href="/proyectos"
             className="inline-flex items-center justify-center border border-white/25 px-8 py-4 text-sm font-medium text-white transition-colors hover:border-white/60 hover:bg-white/5"
           >
-            Ver el catálogo
+            Proyectos integrales
           </Link>
         </motion.div>
 
