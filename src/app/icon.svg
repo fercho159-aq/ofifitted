@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Silla Ofifitted: silueta simplificada del ícono del logo -->
+  <!-- Respaldo -->
+  <rect fill="#E30613" x="8" y="0" width="12" height="14" rx="2"/>
+  <!-- Asiento -->
+  <rect fill="#E30613" x="5" y="15" width="18" height="4" rx="1"/>
+  <!-- Columna -->
+  <rect fill="#E30613" x="12" y="19" width="4" height="5" rx="1"/>
+  <!-- Base -->
+  <rect fill="#E30613" x="3" y="25" width="22" height="3" rx="1.5"/>
+  <!-- Ruedas -->
+  <circle fill="#E30613" cx="5" cy="30" r="2"/>
+  <circle fill="#E30613" cx="23" cy="30" r="2"/>
+</svg>
