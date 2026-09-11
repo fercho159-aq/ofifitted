@@ -3,7 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import { getCategoryBySlug, getCategoryCover } from "@/lib/catalog";
+import {
+  getCategoryBySlug,
+  getCategoryCover,
+  getRootCategories,
+} from "@/lib/catalog";
 import { waMessages, whatsappUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -82,6 +86,10 @@ export default function ProyectosPage() {
   const heroCategory =
     getCategoryBySlug("recepciones") ?? getCategoryBySlug("centros-de-trabajo");
   const heroImage = heroCategory ? getCategoryCover(heroCategory) : null;
+
+  const categories = getRootCategories()
+    .slice(0, 8)
+    .map((category) => ({ category, cover: getCategoryCover(category) }));
 
   return (
     <>
@@ -184,7 +192,82 @@ export default function ProyectosPage() {
         </RevealGroup>
       </section>
 
-      {/* Como funciona */}
+      {/* Catálogo por línea */}
+      <section className="border-t border-ink-200 bg-white">
+        <div className="container-page py-20 md:py-28">
+          <Reveal>
+            <p className="eyebrow text-accent-600">
+              Todo sale de la misma planta
+            </p>
+            <h2 className="heading-section mt-3 max-w-2xl">
+              Líneas de mobiliario disponibles.
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-600">
+              Escritorios, sillas, recepciones, almacenamiento y líneas
+              especiales. Mismo acabado, un solo proveedor.
+            </p>
+          </Reveal>
+
+          <RevealGroup
+            className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+            step={0.07}
+          >
+            {categories.map(({ category, cover }) => (
+              <RevealItem key={category.slug}>
+                <Link
+                  href={`/catalogo/${category.slug}`}
+                  className="group relative block overflow-hidden bg-ink-50"
+                >
+                  <div className="aspect-4/3">
+                    {cover ? (
+                      <Image
+                        src={cover.src}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        placeholder="blur"
+                        blurDataURL={cover.blurDataURL}
+                        className="object-contain p-6 transition-transform duration-700 ease-[var(--ease-brand)] group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-ink-100" />
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-medium text-ink-900">
+                      {category.name}
+                    </h3>
+                    <p className="mt-0.5 text-sm text-ink-500">
+                      {category.productCount} modelos
+                    </p>
+                  </div>
+                </Link>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+
+          <Reveal delay={0.1}>
+            <Link
+              href="/catalogo"
+              className="mt-10 inline-flex items-center gap-2 border-b border-ink-900 pb-1 text-sm font-medium text-ink-900 transition-colors hover:border-brand-600 hover:text-brand-600"
+            >
+              Ver catálogo completo
+              <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden>
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Cómo funciona */}
       <section className="border-y border-ink-200 bg-ink-50">
         <div className="container-page py-20 md:py-28">
           <Reveal>
