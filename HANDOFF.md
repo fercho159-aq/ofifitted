@@ -58,7 +58,7 @@ un sitio estático en **Next.js 16**, con:
 | Deploy en Vercel | Funcionando. El cliente ya revisó una versión con la tipografía nueva (commit `c228e56` o posterior) |
 | Testimonios / prueba social | Estructura hecha; contenido de muestra **no publicable** |
 | Visualizador sobre foto | Hecho: 461 productos con recorte, más el modelo de demostración |
-| Modelos 3D | Solo hay uno de prueba, etiquetado como demostración. Los reales los entrega el cliente |
+| Modelos 3D | Dos provisionales: el escritorio DAK (genérico, etiqueta "Modelo de demostración") y la silla Cartagena Alto (modelada en código desde su foto con `scripts/make-chair-model.mjs`, etiqueta "Representación 3D aproximada"). La etiqueta sale del campo `fidelity` en `MODELS`. Los reales los entrega el cliente |
 | Redes sociales | Espacio listo en header y footer; **faltan las URLs** (el cliente no ha decidido cuáles) |
 | Catálogos PDF | Publicados, pero pesan 140 MB y hay que optimizarlos |
 | Aviso de privacidad | Borrador técnico, falta revisión legal |

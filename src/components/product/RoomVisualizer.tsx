@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { Product } from "@/lib/catalog";
 import { drawer, overlay as overlayVariants } from "@/lib/motion";
+import { modelNotice, type ModelNotice } from "@/lib/model-notice";
 import { loadModelViewer, type ModelViewerElement } from "@/lib/model-viewer";
 import { waMessages, whatsappUrl } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -118,6 +119,8 @@ export function RoomVisualizer({ product, open, onClose }: Props) {
     : product.cutout
       ? "cutout"
       : null;
+  // El recorte es la foto real del producto: la etiqueta solo aplica al modelo.
+  const notice = kind === "model" ? modelNotice(product.model) : null;
 
   const [photo, setPhoto] = useState<string | null>(null);
   const [photoSize, setPhotoSize] = useState<Size>({ w: 0, h: 0 });
@@ -480,7 +483,7 @@ export function RoomVisualizer({ product, open, onClose }: Props) {
                     inputRef={inputRef}
                     error={error}
                     onFile={handleFile}
-                    demo={Boolean(product.model?.demo)}
+                    notice={notice}
                   />
                 ) : (
                   <>
@@ -554,9 +557,14 @@ export function RoomVisualizer({ product, open, onClose }: Props) {
                       </div>
                     )}
 
-                    {product.model?.demo && (
-                      <p className="absolute top-3 left-3 bg-amber-500/95 px-2.5 py-1 text-[11px] font-medium text-ink-900">
-                        Modelo de demostración · no es el mueble real
+                    {kind === "model" && notice && (
+                      <p
+                        className={cn(
+                          "absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium text-ink-900",
+                          notice.tone === "warning" ? "bg-amber-500/95" : "bg-white/90"
+                        )}
+                      >
+                        {notice.badge}
                       </p>
                     )}
 
@@ -615,12 +623,12 @@ function PhotoPicker({
   inputRef,
   error,
   onFile,
-  demo,
+  notice,
 }: {
   inputRef: React.RefObject<HTMLInputElement | null>;
   error: string | null;
   onFile: (file: File | null | undefined) => void;
-  demo: boolean;
+  notice: ModelNotice | null;
 }) {
   const [over, setOver] = useState(false);
 
@@ -678,9 +686,16 @@ function PhotoPicker({
           <li>· Tu foto no se sube a ningún servidor: todo pasa en tu teléfono.</li>
         </ul>
 
-        {demo && (
-          <p className="bg-amber-500/15 px-3 py-2 text-xs text-amber-200">
-            Este producto usa un modelo 3D de demostración, no el mueble real.
+        {notice && (
+          <p
+            className={cn(
+              "px-3 py-2 text-xs",
+              notice.tone === "warning"
+                ? "bg-amber-500/15 text-amber-200"
+                : "bg-white/10 text-white/70"
+            )}
+          >
+            {notice.detail}
           </p>
         )}
 

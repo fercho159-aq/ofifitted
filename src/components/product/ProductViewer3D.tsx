@@ -5,8 +5,10 @@ import { useEffect, useRef, useState } from "react";
 
 import type { ProductModel } from "@/lib/catalog";
 import { pop } from "@/lib/motion";
+import { modelNotice } from "@/lib/model-notice";
 import { loadModelViewer } from "@/lib/model-viewer";
 import { waMessages, whatsappUrl } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 /* ────────────────────────────────────────────────────────────────────
    Visor 3D del producto.
@@ -41,6 +43,7 @@ export function ProductViewer3D({ model, productTitle, poster }: Props) {
   const [libraryReady, setLibraryReady] = useState(false);
   const [arAvailable, setArAvailable] = useState(false);
   const [error, setError] = useState(false);
+  const notice = modelNotice(model);
 
   /* La librería se pide al montar, no al entrar en pantalla.
      Este componente solo se monta cuando alguien abre la pestaña "Ver en
@@ -117,9 +120,16 @@ export function ProductViewer3D({ model, productTitle, poster }: Props) {
             ))}
           </div>
 
-          {model.demo && (
-            <p className="absolute top-3 left-3 bg-amber-400 px-2.5 py-1 text-[11px] font-medium text-ink-900">
-              Modelo de demostración · no es el mueble real
+          {notice && (
+            <p
+              className={cn(
+                "absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium",
+                notice.tone === "warning"
+                  ? "bg-amber-400 text-ink-900"
+                  : "bg-white/90 text-ink-700 shadow-sm ring-1 ring-ink-200"
+              )}
+            >
+              {notice.badge}
             </p>
           )}
 

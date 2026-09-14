@@ -48,11 +48,17 @@ export type ProductModel = {
   /** Dimensiones reales en centímetros, para la ficha técnica. */
   dimensions?: { width: number; depth: number; height: number };
   /**
-   * Modelo genérico de prueba, no el del producto. Se muestra con una
-   * etiqueta visible para que nadie crea que ese es el mueble que va a
-   * recibir.
+   * Qué tan fiel es el modelo al mueble, cuando no viene de fábrica. Se
+   * muestra con una etiqueta visible para que nadie crea que ese es
+   * exactamente el mueble que va a recibir.
+   *
+   * · "demo"        → modelo genérico de prueba, no se parece al producto.
+   * · "approximate" → modelado a partir de la foto del producto: se parece,
+   *                   pero medidas y acabados son aproximados.
+   *
+   * Sin este campo, el modelo es el real y no lleva etiqueta.
    */
-  demo?: boolean;
+  fidelity?: "demo" | "approximate";
 };
 
 export type ProductCutout = {
@@ -87,12 +93,14 @@ const MODELS: Record<string, ProductModel> = {
   "escritorio-dak-2": {
     glb: "/models/escritorio-demo.glb",
     dimensions: { width: 160, depth: 70, height: 75 },
-    demo: true,
+    fidelity: "demo",
   },
+  // Modelada en código a partir de la foto (scripts/make-chair-model.mjs),
+  // no entregada por fábrica: las medidas son aproximadas.
   "silla-cartagena-alto-4": {
-    glb: "/models/silla-demo.glb",
-    dimensions: { width: 48, depth: 45, height: 111 },
-    demo: true,
+    glb: "/models/silla-cartagena-alto.glb",
+    dimensions: { width: 64, depth: 64, height: 110 },
+    fidelity: "approximate",
   },
 };
 
