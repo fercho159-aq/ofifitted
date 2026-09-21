@@ -1,11 +1,81 @@
 [
   {
+    "slug": "catalogo-ofifitted-2026",
+    "title": "Catálogo Ofifitted 2026",
+    "summary": "Catálogo general con la línea completa de sillería.",
+    "pdf": "/catalogos/catalogo-ofifitted-2026.pdf",
+    "sizeBytes": 10558574,
+    "featured": true,
+    "cover": {
+      "src": "/catalogos/catalogo-ofifitted-2026.png",
+      "width": 800,
+      "height": 1182,
+      "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
+    }
+  },
+  {
+    "slug": "silleria-black",
+    "title": "Sillería Black",
+    "summary": "Sillas ejecutivas, operativas y de visita de la línea Black.",
+    "pdf": "/catalogos/silleria-black.pdf",
+    "sizeBytes": 18894427,
+    "featured": true,
+    "cover": {
+      "src": "/catalogos/silleria-black.png",
+      "width": 800,
+      "height": 1036,
+      "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
+    }
+  },
+  {
+    "slug": "silleria-econo",
+    "title": "Sillería Econo",
+    "summary": "Sillas operativas y ejecutivas económicas.",
+    "pdf": "/catalogos/silleria-econo.pdf",
+    "sizeBytes": 16312878,
+    "featured": true,
+    "cover": {
+      "src": "/catalogos/silleria-econo.png",
+      "width": 800,
+      "height": 1036,
+      "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
+    }
+  },
+  {
+    "slug": "sillas-bancos-trabajo",
+    "title": "Sillas y Bancos de Trabajo",
+    "summary": "Colección A-26: sillería ejecutiva, operativa y bancos.",
+    "pdf": "/catalogos/sillas-bancos-trabajo.pdf",
+    "sizeBytes": 10705523,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/sillas-bancos-trabajo.png",
+      "width": 800,
+      "height": 1036,
+      "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
+    }
+  },
+  {
+    "slug": "coleccion-labenze",
+    "title": "Colección Labenze",
+    "summary": "Sillas de diseño para oficina y espacios contract.",
+    "pdf": "/catalogos/coleccion-labenze.pdf",
+    "sizeBytes": 61843190,
+    "featured": false,
+    "cover": {
+      "src": "/catalogos/coleccion-labenze.png",
+      "width": 800,
+      "height": 1053,
+      "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
+    }
+  },
+  {
     "slug": "general-2022",
     "title": "Catálogo general",
     "summary": "La línea completa: escritorios, sillería, recepciones y archivo.",
     "pdf": "/catalogos/general-2022.pdf",
     "sizeBytes": 8920253,
-    "featured": true,
+    "featured": false,
     "cover": {
       "src": "/catalogos/general-2022.webp",
       "width": 800,
@@ -150,7 +220,7 @@
       "src": "/catalogos/divetro.webp",
       "width": 800,
       "height": 1025,
-      "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JaQAAWvYyUEJhujWOyAD+3/TqbTZZXUUSyEZQK3Rw1H8r4jPrQex2lbmfy2i+sATTC72ixK0w1nUjeIZpy3mYsqiA7TbBTk+9p55luZAAAA=="
+      "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JaQAAWvYyUEJhujWOyAD+3/TqbTZZXUUSyEZQK3Rw1H8r4jPrQex2lbmfy2i+sATTC72ixK0w1nUjeIZpy3mYsqiA7TbBTk+9p55luZAAAA="
     }
   }
 ]
