@@ -41,6 +41,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} · ${site.tagline}`,
     description: site.description,
+    images: [{ url: "/brand/og-default.jpg", width: 1200, height: 630 }],
   },
   robots: { index: true, follow: true },
 };

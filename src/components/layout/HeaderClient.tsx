@@ -110,15 +110,27 @@ export function HeaderClient({ groups, links }: Props) {
         onMouseLeave={closeSoon}
       >
         <div className="container-page flex h-[var(--header-h)] items-center justify-between gap-6">
-          <Link href="/" className="shrink-0" aria-label="Ofifitted, inicio">
+          {/* El logo es un emblema cuadrado: a la altura del header su texto
+              interior no se alcanza a leer, así que el nombre va al lado en la
+              tipografía del sitio. */}
+          <Link
+            href="/"
+            className="flex shrink-0 items-center gap-2.5"
+            aria-label="Ofifitted, inicio"
+          >
             <Image
               src="/brand/logo-ofifitted.png"
-              alt="Ofifitted"
-              width={192}
-              height={43}
+              alt=""
+              width={512}
+              height={512}
               priority
-              className="h-7 w-auto md:h-8"
+              className="h-9 w-9 rounded-lg md:h-10 md:w-10"
             />
+            {/* Entre 1024 y 1535 px el mega menú ocupa todo el ancho y el
+                nombre desbordaba la barra: ahí se queda solo el emblema. */}
+            <span className="font-[family-name:var(--font-display)] text-xl leading-none font-medium tracking-wide text-ink-900 max-lg:inline hidden md:text-2xl 2xl:inline">
+              OFIFITTED
+            </span>
           </Link>
 
           {/* Navegación de escritorio */}
@@ -354,13 +366,18 @@ function MobileDrawer({
             className="fixed inset-y-0 right-0 z-[80] flex w-[min(88vw,26rem)] flex-col bg-paper lg:hidden"
           >
             <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between border-b border-ink-200 px-5">
-              <Image
-                src="/brand/logo-ofifitted.png"
-                alt="Ofifitted"
-                width={192}
-                height={43}
-                className="h-7 w-auto"
-              />
+              <div className="flex items-center gap-2.5">
+                <Image
+                  src="/brand/logo-ofifitted.png"
+                  alt=""
+                  width={512}
+                  height={512}
+                  className="h-9 w-9 rounded-lg"
+                />
+                <span className="font-[family-name:var(--font-display)] text-xl leading-none font-medium tracking-wide text-ink-900">
+                  OFIFITTED
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={onClose}

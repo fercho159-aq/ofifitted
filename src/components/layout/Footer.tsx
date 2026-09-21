@@ -37,13 +37,18 @@ export function Footer() {
 
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <Image
-            src="/brand/logo-ofifitted.png"
-            alt={site.name}
-            width={192}
-            height={43}
-            className="h-8 w-auto"
-          />
+          <div className="flex items-center gap-3">
+            <Image
+              src="/brand/logo-ofifitted.png"
+              alt=""
+              width={512}
+              height={512}
+              className="h-12 w-12 rounded-lg"
+            />
+            <span className="font-[family-name:var(--font-display)] text-2xl leading-none font-medium tracking-wide text-ink-900">
+              {site.name.toUpperCase()}
+            </span>
+          </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-600">
             {site.description}
           </p>

@@ -661,8 +661,26 @@ línea, siguen explotables.
 El rojo del logo `#FF0000` no pasa contraste AA para texto; por eso los botones
 usan `#E30613`.
 
-Logo: `public/brand/logo-ofifitted.png`. Viene del backup
-(`uploads/2021/07/logo_0ac5e05ac867af1779fa660c8c09b37e_1x.png`).
+Logo: el cliente entregó el original en septiembre de 2026 y sustituyó al que
+se había sacado del backup. Es un emblema cuadrado —silla y "OFI FITTED" en
+blanco sobre rojo `#E4332D`—, no un logotipo horizontal.
+
+El original vive en `public/brand/logo-ofifitted-badge.jpeg`. Como es un JPEG
+con artefactos de compresión, todo lo que publica el sitio se regenera desde él
+con `node scripts/make-brand-assets.mjs`, que separa el arte blanco del fondo y
+lo recompone sobre rojo plano:
+
+| Archivo | Para qué |
+|---|---|
+| `public/brand/logo-ofifitted.png` | Header, footer y menú móvil |
+| `src/app/icon.png` | Ícono de la pestaña del navegador |
+| `src/app/apple-icon.png` | Pantalla de inicio en iOS |
+| `public/brand/og-default.jpg` | Vista previa al compartir el enlace |
+| `public/brand/logo-ofifitted-blanco.png` | El arte suelto, con transparencia |
+
+A la altura del header el texto del emblema no se alcanza a leer, así que el
+nombre va al lado en Oswald. Entre 1024 y 1535 px se oculta: ahí el mega menú
+ocupa todo el ancho y la barra se desbordaba (ver [Poppins es ancha](#poppins-es-ancha)).
 
 ### Contacto
 
