@@ -1,24 +1,10 @@
 [
   {
-    "slug": "catalogo-ofifitted-2026",
-    "title": "Catálogo Ofifitted 2026",
-    "summary": "Catálogo general con la línea completa de sillería.",
-    "pdf": "/catalogos/catalogo-ofifitted-2026.pdf",
-    "sizeBytes": 10558574,
-    "featured": true,
-    "cover": {
-      "src": "/catalogos/catalogo-ofifitted-2026.png",
-      "width": 800,
-      "height": 1182,
-      "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
-    }
-  },
-  {
     "slug": "silleria-black",
-    "title": "Sillería Black",
-    "summary": "Sillas ejecutivas, operativas y de visita de la línea Black.",
+    "title": "Sillería Colección",
+    "summary": "Sillas ejecutivas, operativas y de visita.",
     "pdf": "/catalogos/silleria-black.pdf",
-    "sizeBytes": 18894427,
+    "sizeBytes": 8836108,
     "featured": true,
     "cover": {
       "src": "/catalogos/silleria-black.png",
@@ -32,7 +18,7 @@
     "title": "Sillería Econo",
     "summary": "Sillas operativas y ejecutivas económicas.",
     "pdf": "/catalogos/silleria-econo.pdf",
-    "sizeBytes": 16312878,
+    "sizeBytes": 7876345,
     "featured": true,
     "cover": {
       "src": "/catalogos/silleria-econo.png",
@@ -46,7 +32,7 @@
     "title": "Sillas y Bancos de Trabajo",
     "summary": "Colección A-26: sillería ejecutiva, operativa y bancos.",
     "pdf": "/catalogos/sillas-bancos-trabajo.pdf",
-    "sizeBytes": 10705523,
+    "sizeBytes": 11231110,
     "featured": false,
     "cover": {
       "src": "/catalogos/sillas-bancos-trabajo.png",
@@ -57,15 +43,29 @@
   },
   {
     "slug": "coleccion-labenze",
-    "title": "Colección Labenze",
+    "title": "Colección de Diseño",
     "summary": "Sillas de diseño para oficina y espacios contract.",
     "pdf": "/catalogos/coleccion-labenze.pdf",
-    "sizeBytes": 61843190,
+    "sizeBytes": 62347826,
     "featured": false,
     "cover": {
       "src": "/catalogos/coleccion-labenze.png",
       "width": 800,
       "height": 1053,
+      "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
+    }
+  },
+  {
+    "slug": "catalogo-ofifitted-2026",
+    "title": "Catálogo Ofifitted 2026",
+    "summary": "Catálogo general con la línea completa de sillería.",
+    "pdf": "/catalogos/catalogo-ofifitted-2026.pdf",
+    "sizeBytes": 10558574,
+    "featured": true,
+    "cover": {
+      "src": "/catalogos/catalogo-ofifitted-2026.png",
+      "width": 800,
+      "height": 1182,
       "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAgCdASoQABQAPu1iqU2ppaQiMAgBMB2JaQAAerHYAAD+8N8s7clYbzFgAAAA"
     }
   },
