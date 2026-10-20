@@ -8,6 +8,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { SocialLinks } from "@/components/ui/SocialLinks";
 import { SearchBar } from "@/components/layout/SearchBar";
+import { searchProducts, type SearchResult } from "@/lib/search-action";
 import { drawer, megaPanel, overlay } from "@/lib/motion";
 import { contact, waMessages, whatsappUrl } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -398,6 +399,8 @@ function MobileDrawer({
               </button>
             </div>
 
+            <DrawerSearch onNavigate={onClose} />
+
             <nav
               aria-label="Principal"
               className="flex-1 overflow-y-auto overscroll-contain px-5 py-4"
@@ -525,5 +528,115 @@ function MobileDrawer({
         </>
       )}
     </AnimatePresence>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════ */
+
+function DrawerSearch({ onNavigate }: { onNavigate: () => void }) {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+
+  const doSearch = useCallback((q: string) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (q.trim().length < 2) {
+      setResults([]);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    debounceRef.current = setTimeout(async () => {
+      const r = await searchProducts(q);
+      setResults(r);
+      setLoading(false);
+    }, 200);
+  }, []);
+
+  return (
+    <div className="border-b border-ink-100 px-5 py-3">
+      <div className="flex items-center gap-2.5 rounded-lg border border-ink-200 bg-ink-50 px-3">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="shrink-0 text-ink-400" aria-hidden>
+          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M16 16l4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+        <input
+          type="search"
+          placeholder="Buscar productos..."
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            doSearch(e.target.value);
+          }}
+          className="h-10 flex-1 bg-transparent text-sm text-ink-900 outline-none placeholder:text-ink-400"
+        />
+        {query && (
+          <button
+            type="button"
+            onClick={() => { setQuery(""); setResults([]); }}
+            className="text-ink-400"
+            aria-label="Limpiar búsqueda"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden>
+              <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {query.trim().length >= 2 && (
+        <div className="mt-2">
+          {loading && results.length === 0 && (
+            <p className="py-3 text-center text-sm text-ink-400">Buscando...</p>
+          )}
+
+          {!loading && results.length === 0 && (
+            <p className="py-3 text-center text-sm text-ink-400">Sin resultados</p>
+          )}
+
+          {results.length > 0 && (
+            <ul className="space-y-1">
+              {results.map((r) => (
+                <li key={r.slug}>
+                  <Link
+                    href={`/producto/${r.slug}`}
+                    onClick={onNavigate}
+                    className="flex items-center gap-3 rounded-lg px-1 py-2 transition-colors active:bg-ink-50"
+                  >
+                    {r.image ? (
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-ink-100">
+                        <Image
+                          src={r.image.src}
+                          alt=""
+                          width={r.image.width}
+                          height={r.image.height}
+                          placeholder="blur"
+                          blurDataURL={r.image.blurDataURL}
+                          sizes="48px"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-ink-100">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-ink-300" aria-hidden>
+                          <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                        </svg>
+                      </div>
+                    )}
+                    <span className="min-w-0 flex-1 text-sm font-medium text-ink-800 leading-snug">
+                      {r.title}
+                    </span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0 text-ink-300" aria-hidden>
+                      <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
