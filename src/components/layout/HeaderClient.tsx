@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { SocialLinks } from "@/components/ui/SocialLinks";
+import { SearchBar } from "@/components/layout/SearchBar";
 import { drawer, megaPanel, overlay } from "@/lib/motion";
 import { contact, waMessages, whatsappUrl } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -179,6 +180,8 @@ export function HeaderClient({ groups, links }: Props) {
           </nav>
 
           <div className="flex items-center gap-2">
+            <SearchBar onOpenChange={(isOpen) => { if (isOpen) setDrawerOpen(false); }} />
+
             <a
               href={whatsappUrl(waMessages.general)}
               target="_blank"
