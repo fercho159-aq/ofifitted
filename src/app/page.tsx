@@ -1,47 +1,48 @@
-import { CategoriesSection } from "@/components/home/CategoriesSection";
+import { CatalogShortcut } from "@/components/home/CatalogShortcut";
 import { Hero } from "@/components/home/Hero";
-import { OfferSection } from "@/components/home/OfferSection";
-import { ProjectsBanner } from "@/components/home/ProjectsBanner";
 import { Testimonials } from "@/components/home/Testimonials";
-import { ValueStrip } from "@/components/home/ValueStrip";
-import { ViewerTeaser } from "@/components/home/ViewerTeaser";
+import { PartnersSection } from "@/components/projects/PartnersSection";
+import { ProcessSection } from "@/components/projects/ProcessSection";
+import { ProjectQuoteSection } from "@/components/projects/ProjectQuoteSection";
+import { SpacesSection } from "@/components/projects/SpacesSection";
 import {
   catalogStats,
   getCategoryBySlug,
   getCategoryCover,
   getProductBySlug,
   getRootCategories,
-  getVisualizableProducts,
 } from "@/lib/catalog";
 
+/**
+ * Home orientada a proyectos B2B.
+ *
+ * Orden: promesa (hero) → qué espacios equipamos → cómo trabajamos →
+ * socios comerciales → prueba social → brief de proyecto. El catálogo de
+ * piezas sueltas cierra la página como complemento, no como protagonista.
+ */
 export default function HomePage() {
-  const heroCategory =
-    getCategoryBySlug("directivo-escritorios") ?? getCategoryBySlug("escritorios");
-  const heroImage = heroCategory ? getCategoryCover(heroCategory) : null;
+  // Foto de ambiente (oficina de dirección completa), no un recorte de
+  // producto: el hero vende el espacio terminado, no el mueble.
+  const heroImage =
+    getProductBySlug("centuria-directivo-2")?.images[0] ??
+    (() => {
+      const fallback = getCategoryBySlug("directivo-escritorios");
+      return fallback ? getCategoryCover(fallback) : null;
+    })();
 
-  const cards = getRootCategories()
-    .slice(0, 7)
+  const catalogCards = getRootCategories()
+    .slice(0, 6)
     .map((category) => ({ category, cover: getCategoryCover(category) }));
-
-  const visualizable = getVisualizableProducts();
-  const teaserProduct =
-    getProductBySlug("altus-2") ?? visualizable.find((p) => p.cutout) ?? null;
 
   return (
     <>
-      {heroImage && (
-        <Hero
-          image={heroImage}
-          productCount={catalogStats.products}
-          categoryCount={catalogStats.categories}
-        />
-      )}
-      <CategoriesSection cards={cards} />
-      <ProjectsBanner />
-      <ValueStrip />
-      <ViewerTeaser product={teaserProduct} total={visualizable.length} />
+      {heroImage && <Hero image={heroImage} />}
+      <SpacesSection />
+      <ProcessSection />
+      <PartnersSection />
       <Testimonials />
-      <OfferSection />
+      <ProjectQuoteSection />
+      <CatalogShortcut cards={catalogCards} productCount={catalogStats.products} />
     </>
   );
 }

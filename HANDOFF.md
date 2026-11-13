@@ -3,7 +3,7 @@
 Documento para quien retome este proyecto, persona o IA. Resume todo lo que se
 hizo, por qué se hizo así, qué quedó pendiente y dónde están las trampas.
 
-Última actualización: 10 de septiembre de 2026, tras la primera ronda de feedback del cliente.
+Última actualización: 13 de noviembre de 2026, tras el pivote a proyectos B2B.
 
 > **Si eres una IA:** lee este archivo completo antes de tocar código. La
 > sección [Reglas que no se rompen](#reglas-que-no-se-rompen) y la de
@@ -229,6 +229,39 @@ oficina completa—, donde no hay un fondo que quitar; a esos no se les ofrece e
 botón. El punto débil conocido son los **muebles blancos o gris claro sobre
 fondo blanco**, a los que el relleno les come parte de las caras. Si el cliente
 ve uno mal, su slug va a `EXCLUDE_SLUGS` en el script.
+
+### 10. Pivote a proyectos corporativos (B2B)
+
+El sitio deja de venderse como catálogo y pasa a vender **proyectos llave en
+mano** (oficinas, open spaces, salas de juntas, lobbies y áreas comunes) a
+empresas medianas y grandes, arquitectos, constructoras y desarrolladores. El
+catálogo de piezas sueltas se conserva completo, pero en segundo plano.
+
+- **Navegación:** Proyectos · Espacios · Arquitectos y constructoras primero;
+  todas las líneas del catálogo dentro de un solo desplegable "Productos"
+  (`ProductsPanel` en `HeaderClient.tsx`). Catálogos PDF, Nosotros y Contacto
+  quedan a la derecha desde `xl`. Enlaces en `primaryLinks` y `navLinks` de
+  `src/lib/taxonomy.ts`. Medido sin desborde a 1024 y 1280 px.
+- **CTA global:** "Cotiza tu proyecto" → `/proyectos#cotizar` (header, menú
+  móvil, pie). La secundaria es "Agendar asesoría" por WhatsApp
+  (`waMessages.consult`).
+- **Home:** hero B2B → espacios → proceso en 5 pasos → socios → testimonios
+  (se ocultan en producción, como antes) → brief de proyecto (`#cotizar`) →
+  catálogo general compacto. `ValueStrip`, `CategoriesSection` y
+  `OfferSection` ya no se usan en la home; `ViewerTeaser` y `ProjectsBanner`
+  se movieron a `/catalogo`.
+- **Brief de proyecto:** `src/components/projects/ProjectBriefForm.tsx`.
+  Mismo principio que `QuoteForm`: compone el mensaje y abre WhatsApp, sin
+  backend. Pide nombre y empresa (obligatorios), perfil, ubicación, espacios,
+  tamaño, fecha y si hay planos: lo que hace falta para calificar el lead.
+- **Contenido centralizado** en `src/lib/projects.tsx` (espacios, ventajas
+  para socios y pasos del proceso). Las fotos de espacios son **fotos de
+  ambiente del catálogo, no obras terminadas**: el texto nunca dice "proyecto
+  realizado para…". Cambiarlas por fotos reales de instalaciones en cuanto
+  el cliente las entregue.
+- **Por confirmar con el cliente:** que ofrecen **instalación** en sitio
+  (el copy lo promete en hero, proceso y /proyectos) y las condiciones
+  especiales para socios (el copy habla de precio por volumen sin cifras).
 
 ---
 

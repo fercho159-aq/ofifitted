@@ -9,9 +9,9 @@
 export const site = {
   name: "Ofifitted",
   legalName: "Ofifitted",
-  tagline: "Fabricantes de mobiliario para oficina",
+  tagline: "Proyectos integrales de mobiliario corporativo",
   description:
-    "Fabricamos muebles de oficina sobre medida: escritorios, sillas ejecutivas, recepciones y centros de trabajo. Envíos a toda la República Mexicana.",
+    "Equipamos oficinas, salas de juntas, lobbies y áreas comunes llave en mano para empresas, arquitectos y constructoras. Fabricación propia y cobertura en toda la República Mexicana.",
   url: "https://ofifitted.com",
   locale: "es-MX",
 } as const;
@@ -65,6 +65,10 @@ export const waMessages = {
   category: (categoryName: string) =>
     `Hola Ofifitted, quiero cotizar mobiliario de la línea ${categoryName}.`,
   project: "Hola Ofifitted, quiero amueblar una oficina completa. ¿Me apoyan con una propuesta?",
+  consult:
+    "Hola Ofifitted, quiero agendar una asesoría con un especialista para un proyecto de mobiliario corporativo.",
+  partner:
+    "Hola Ofifitted, soy arquitecto/constructora y quiero conocer sus condiciones para proyectos (tiempos, volumen y precios por proyecto).",
   visualizer: (productTitle: string) =>
     `Hola Ofifitted, acabo de ver el ${productTitle} en 3D y me interesa cotizarlo.`,
   roomPhoto: (productTitle: string) =>

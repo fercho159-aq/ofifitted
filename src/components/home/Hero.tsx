@@ -7,24 +7,25 @@ import { useRef } from "react";
 
 import type { ProductImage } from "@/lib/catalog";
 import { DURATION, EASE } from "@/lib/motion";
+import { waMessages, whatsappUrl } from "@/lib/site";
 
 type Props = {
   image: ProductImage;
-  productCount: number;
-  categoryCount: number;
 };
 
 /**
- * Hero de la home.
+ * Hero de la home, enfocado a proyectos corporativos (B2B).
  *
- * Gancho (PASTOR · Problema): quien busca mobiliario de oficina en México
- * casi siempre acaba con un revendedor. El primer mensaje del sitio ataca
- * justo eso, porque es la única ventaja que un intermediario no puede copiar.
+ * Le habla a quien decide un proyecto completo —director de operaciones,
+ * arquitecto, constructora—, no a quien busca una silla. La CTA principal
+ * lleva al brief de proyecto; la secundaria abre una asesoría por
+ * WhatsApp. El catálogo queda como enlace discreto para quien sí busca
+ * piezas sueltas, sin competir con el botón principal.
  *
  * La foto se desplaza más lento que el texto al hacer scroll: da profundidad
  * sin que nada se lea en movimiento.
  */
-export function Hero({ image, productCount, categoryCount }: Props) {
+export function Hero({ image }: Props) {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
 
@@ -73,7 +74,7 @@ export function Hero({ image, productCount, categoryCount }: Props) {
       {/* Contenido */}
       <motion.div
         style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
-        className="container-page relative z-10 pt-32 pb-16 md:pb-24"
+        className="container-page relative z-10 pt-28 pb-16 md:pt-32 md:pb-24"
       >
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -81,28 +82,30 @@ export function Hero({ image, productCount, categoryCount }: Props) {
           transition={{ duration: DURATION.base, ease: EASE }}
           className="eyebrow text-accent-400"
         >
-          Fabricantes directos · Ciudad de México
+          Proyectos corporativos llave en mano · Fabricantes directos
         </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: DURATION.slow, ease: EASE, delay: 0.08 }}
-          className="heading-hero mt-4 max-w-4xl text-white"
+          className="heading-hero mt-4 max-w-5xl text-[clamp(2.1rem,5.2vw,4.4rem)]! leading-[1.04]! text-white"
         >
-          Mobiliario de oficina
-          <br />
-          <span className="text-white/60">directo de fábrica.</span>
+          Mobiliario integral para proyectos{" "}
+          <span className="text-white/60">
+            corporativos, arquitectónicos y de construcción.
+          </span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: DURATION.base, ease: EASE, delay: 0.18 }}
-          className="mt-6 max-w-xl text-base leading-relaxed text-white/75 md:text-lg"
+          className="mt-6 max-w-2xl text-base leading-relaxed text-white/75 md:text-lg"
         >
-          Escritorios, sillas, recepciones y almacenamiento fabricados a tu
-          medida. Sin intermediarios, sin sobreprecio.
+          Delega en un solo proveedor el equipamiento completo de tus
+          oficinas, salas de juntas, lobbies y áreas comunes. Proyectamos,
+          fabricamos e instalamos, con fechas comprometidas y precio de planta.
         </motion.p>
 
         <motion.div
@@ -112,30 +115,57 @@ export function Hero({ image, productCount, categoryCount }: Props) {
           className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
         >
           <Link
-            href="/catalogo"
-            className="inline-flex items-center justify-center bg-accent-600 px-8 py-4 text-sm font-medium text-white transition-colors hover:bg-accent-700"
+            href="#cotizar"
+            className="inline-flex items-center justify-center gap-2 bg-accent-600 px-8 py-4 text-sm font-medium text-white transition-colors hover:bg-accent-700"
           >
-            Ver catálogo
+            Cotiza tu proyecto
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden>
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </Link>
-          <Link
-            href="/proyectos"
+          <a
+            href={whatsappUrl(waMessages.consult)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center border border-white/25 px-8 py-4 text-sm font-medium text-white transition-colors hover:border-white/60 hover:bg-white/5"
           >
-            Proyectos integrales
-          </Link>
+            Agendar asesoría con un especialista
+          </a>
         </motion.div>
 
-        {/* Cifras verificables del propio catálogo, no promesas. */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: DURATION.base, delay: 0.34 }}
+          className="mt-5 text-sm text-white/50"
+        >
+          ¿Buscas piezas individuales?{" "}
+          <Link
+            href="/catalogo"
+            className="text-white/80 underline underline-offset-4 hover:text-white"
+          >
+            Ver catálogo general
+          </Link>
+        </motion.p>
+
+        {/* Lo que se ofrece, sin cifras que no se puedan comprobar. */}
         <motion.dl
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: DURATION.base, delay: 0.4 }}
-          className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/15 pt-6"
+          className="mt-12 grid grid-cols-2 gap-x-10 gap-y-5 border-t border-white/15 pt-6 md:flex md:flex-wrap"
         >
-          <Stat value={`${productCount}`} label="modelos en catálogo" />
-          <Stat value={`${categoryCount}`} label="líneas de producto" />
-          <Stat value="República" label="cobertura de envío" />
-          <Stat value="A medida" label="fabricación propia" />
+          <Stat value="Llave en mano" label="proyecto, fabricación e instalación" />
+          <Stat value="Sobre plano" label="asesoría técnica y layout" />
+          <Stat value="Planta propia" label="precio de fábrica por proyecto" />
+          <Stat value="Nacional" label="entregas en toda la República" />
         </motion.dl>
       </motion.div>
 

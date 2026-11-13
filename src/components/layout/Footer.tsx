@@ -3,8 +3,8 @@ import Link from "next/link";
 
 import { SocialLinks } from "@/components/ui/SocialLinks";
 import { getRootCategories } from "@/lib/catalog";
-import { contact, site, waMessages, whatsappUrl } from "@/lib/site";
-import { navLinks } from "@/lib/taxonomy";
+import { contact, site } from "@/lib/site";
+import { navLinks, primaryLinks } from "@/lib/taxonomy";
 
 export function Footer() {
   const categories = getRootCategories().slice(0, 8);
@@ -17,21 +17,19 @@ export function Footer() {
         <div className="container-page flex flex-col items-start gap-6 py-12 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="heading-section max-w-xl text-white">
-              Mándanos el plano de tu oficina.
+              ¿Tienes un proyecto en puerta?
             </h2>
             <p className="mt-3 max-w-lg text-sm text-white/70">
-              Te devolvemos una propuesta de distribución con el mobiliario
-              cotizado. Sin costo y sin compromiso.
+              Mándanos el plano. Te devolvemos distribución, mobiliario y
+              cotización por partida. Sin costo y sin compromiso.
             </p>
           </div>
-          <a
-            href={whatsappUrl(waMessages.project)}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/proyectos#cotizar"
             className="shrink-0 bg-white px-7 py-4 text-sm font-medium text-brand-700 transition-colors hover:bg-ink-50"
           >
-            Enviar por WhatsApp
-          </a>
+            Cotiza tu proyecto
+          </Link>
         </div>
       </div>
 
@@ -57,23 +55,29 @@ export function Footer() {
         </div>
 
         <div>
-          <p className="eyebrow mb-4 text-ink-400">Catálogo</p>
+          <p className="eyebrow mb-4 text-ink-400">Proyectos</p>
           <ul className="space-y-2">
-            {categories.map((category) => (
-              <li key={category.slug}>
+            {primaryLinks.map((link) => (
+              <li key={link.href}>
                 <Link
-                  href={`/catalogo/${category.slug}`}
-                  className="text-sm text-ink-700 transition-colors hover:text-brand-600"
+                  href={link.href}
+                  className="text-sm font-medium text-ink-900 transition-colors hover:text-brand-600"
                 >
-                  {category.name}
+                  {link.label}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/proyectos#cotizar"
+                className="text-sm font-medium text-accent-600 transition-colors hover:text-accent-700"
+              >
+                Cotiza tu proyecto
+              </Link>
+            </li>
           </ul>
-        </div>
 
-        <div>
-          <p className="eyebrow mb-4 text-ink-400">Empresa</p>
+          <p className="eyebrow mt-8 mb-4 text-ink-400">Empresa</p>
           <ul className="space-y-2">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -93,6 +97,22 @@ export function Footer() {
                 Aviso de privacidad
               </Link>
             </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="eyebrow mb-4 text-ink-400">Catálogo general</p>
+          <ul className="space-y-2">
+            {categories.map((category) => (
+              <li key={category.slug}>
+                <Link
+                  href={`/catalogo/${category.slug}`}
+                  className="text-sm text-ink-700 transition-colors hover:text-brand-600"
+                >
+                  {category.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -129,7 +149,7 @@ export function Footer() {
       <div className="border-t border-ink-100">
         <div className="container-page flex flex-col gap-2 py-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {site.legalName}. Fabricantes de mobiliario para oficina.
+            © {year} {site.legalName}. Proyectos integrales de mobiliario corporativo.
           </p>
           <p>Hecho en México</p>
         </div>

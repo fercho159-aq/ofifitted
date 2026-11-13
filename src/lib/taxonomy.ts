@@ -199,10 +199,23 @@ export const megaMenu: MegaGroup[] = [
   },
 ];
 
-/** Enlaces sueltos de la barra, a la derecha del mega menú. */
-export const navLinks = [
-  { label: "Catálogos", href: "/catalogos" },
+/**
+ * Navegación principal: el servicio de proyectos B2B va primero.
+ * El catálogo de piezas sueltas vive en un solo desplegable, "Productos",
+ * que agrupa todo el mega menú de arriba.
+ */
+export const primaryLinks = [
   { label: "Proyectos", href: "/proyectos" },
+  { label: "Espacios", href: "/proyectos#espacios" },
+  { label: "Arquitectos y constructoras", href: "/proyectos#socios" },
+] as const;
+
+/** Etiqueta del desplegable que agrupa el catálogo. */
+export const PRODUCTS_MENU_LABEL = "Productos";
+
+/** Enlaces secundarios, a la derecha de "Productos". */
+export const navLinks = [
+  { label: "Catálogos PDF", href: "/catalogos" },
   { label: "Nosotros", href: "/nosotros" },
   { label: "Contacto", href: "/contacto" },
 ] as const;
