@@ -259,6 +259,17 @@ catálogo de piezas sueltas se conserva completo, pero en segundo plano.
   ambiente del catálogo, no obras terminadas**: el texto nunca dice "proyecto
   realizado para…". Cambiarlas por fotos reales de instalaciones en cuanto
   el cliente las entregue.
+- **Videos ilustrativos (IA):** 7 clips verticales generados con IA que
+  entregó el usuario, en `public/videos/` (540×960, H.264 sin audio, ~0.5 MB
+  cada uno, más su poster `.webp`). Se usan en la tira `VideoReel`
+  (home y /proyectos) y como fondo del hero **solo en móvil**. Cada uno lleva
+  la etiqueta visible "Ilustrativo · IA" y la sección aclara que son
+  referencias: no se presentan como obras de Ofifitted. Se registran en
+  `SPACE_VIDEOS` de `src/lib/projects.tsx`; un video real de obra va con
+  `illustrative: false`. `AutoplayVideo` no descarga nada hasta que el
+  video entra en pantalla, lo pausa al salir y respeta "reducir movimiento".
+  Para comprimir uno nuevo:
+  `ffmpeg -i in.mp4 -an -vf scale=540:960 -c:v libx264 -preset slow -crf 27 -pix_fmt yuv420p -movflags +faststart out.mp4`
 - **Por confirmar con el cliente:** que ofrecen **instalación** en sitio
   (el copy lo promete en hero, proceso y /proyectos) y las condiciones
   especiales para socios (el copy habla de precio por volumen sin cifras).

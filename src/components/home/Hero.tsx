@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 
+import { AutoplayVideo } from "@/components/ui/AutoplayVideo";
 import type { ProductImage } from "@/lib/catalog";
 import { DURATION, EASE } from "@/lib/motion";
 import { waMessages, whatsappUrl } from "@/lib/site";
@@ -57,6 +58,14 @@ export function Hero({ image }: Props) {
           placeholder="blur"
           blurDataURL={image.blurDataURL}
           className="object-cover"
+        />
+        {/* En móvil, el video vertical de la oficina de dirección llena la
+            pantalla. En escritorio queda oculto y, como nunca entra en
+            pantalla, ni siquiera se descarga. */}
+        <AutoplayVideo
+          src="/videos/direccion.mp4"
+          poster="/videos/direccion.webp"
+          className="absolute inset-0 h-full w-full object-cover md:hidden"
         />
         {/* Dos capas: una vertical que asienta el bloque de texto y otra
             horizontal que protege la columna izquierda. Con una sola, el

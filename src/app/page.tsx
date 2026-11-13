@@ -5,6 +5,7 @@ import { PartnersSection } from "@/components/projects/PartnersSection";
 import { ProcessSection } from "@/components/projects/ProcessSection";
 import { ProjectQuoteSection } from "@/components/projects/ProjectQuoteSection";
 import { SpacesSection } from "@/components/projects/SpacesSection";
+import { VideoReel } from "@/components/projects/VideoReel";
 import {
   catalogStats,
   getCategoryBySlug,
@@ -38,6 +39,7 @@ export default function HomePage() {
     <>
       {heroImage && <Hero image={heroImage} />}
       <SpacesSection />
+      <VideoReel />
       <ProcessSection />
       <PartnersSection />
       <Testimonials />

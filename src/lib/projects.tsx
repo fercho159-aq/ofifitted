@@ -125,3 +125,27 @@ export const PROJECT_STEPS = [
     body: "Logística coordinada con tu obra y armado en sitio. Una sola entrega, un solo responsable.",
   },
 ] as const;
+
+/**
+ * Videos ilustrativos de espacios, generados con IA.
+ *
+ * NO son instalaciones de Ofifitted ni muebles exactos del catálogo: la
+ * sección que los muestra lo dice en pantalla. Cuando haya video real de
+ * obra, se agrega aquí sin esa etiqueta (`illustrative: false`).
+ *
+ * Verticales 540×960, H.264 sin audio, ~0.5 MB cada uno, en public/videos.
+ */
+export const SPACE_VIDEOS = [
+  { slug: "direccion", title: "Oficina de dirección", href: "/catalogo/directivo-escritorios" },
+  { slug: "open-space", title: "Open space operativo", href: "/catalogo/centros-de-trabajo" },
+  { slug: "benching", title: "Estaciones de trabajo", href: "/catalogo/centros-de-trabajo" },
+  { slug: "cajoneras", title: "Cajoneras móviles", href: "/catalogo/cajoneras" },
+  { slug: "gabinetes", title: "Guardado y archivo", href: "/catalogo/muebles-metalicos" },
+  { slug: "lockers-industriales", title: "Lockers para personal", href: "/catalogo/lockers" },
+  { slug: "lockers-color", title: "Lockers en color", href: "/catalogo/lockers" },
+].map((video) => ({
+  ...video,
+  src: `/videos/${video.slug}.mp4`,
+  poster: `/videos/${video.slug}.webp`,
+  illustrative: true,
+}));

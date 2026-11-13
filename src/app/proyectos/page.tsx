@@ -6,6 +6,7 @@ import { PartnersSection } from "@/components/projects/PartnersSection";
 import { ProcessSection } from "@/components/projects/ProcessSection";
 import { ProjectQuoteSection } from "@/components/projects/ProjectQuoteSection";
 import { SpacesSection } from "@/components/projects/SpacesSection";
+import { VideoReel } from "@/components/projects/VideoReel";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { getCategoryBySlug, getCategoryCover, getProductBySlug } from "@/lib/catalog";
 import { waMessages, whatsappUrl } from "@/lib/site";
@@ -169,6 +170,7 @@ export default function ProyectosPage() {
       </section>
 
       <SpacesSection />
+      <VideoReel />
       <ProcessSection />
       <PartnersSection />
 
