@@ -130,7 +130,7 @@ export function WhatsAppFloat() {
   /* Mensaje genérico: el botón flotante vive en todas las páginas y aquí no
      conoce el producto. La ficha tiene su propio CTA, ese sí prellenado con
      el modelo. */
-  const href = whatsappUrl(waMessages.general);
+  const href = whatsappUrl(waMessages.consult);
 
   return (
     <div className="fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 flex flex-col items-end gap-3">
@@ -177,7 +177,7 @@ export function WhatsAppFloat() {
 
             <p className="pr-4 text-sm leading-snug text-ink-800">
               {openNow
-                ? "¿Ya viste algo que te sirva? Mándanos el modelo y te pasamos precio y tiempo de entrega hoy mismo."
+                ? "¿Tienes un proyecto de oficina, sala de juntas o lobby? Cuéntanos y un especialista te orienta hoy mismo."
                 : "Déjanos tu mensaje ahora y lo contestamos al abrir, a primera hora."}
             </p>
 
@@ -188,7 +188,7 @@ export function WhatsAppFloat() {
               onClick={dismiss}
               className="mt-3 inline-flex w-full items-center justify-center bg-accent-600 py-2.5 text-xs font-medium text-white transition-colors hover:bg-accent-700"
             >
-              Pedir cotización
+              Hablar con un especialista
             </a>
           </motion.div>
         )}

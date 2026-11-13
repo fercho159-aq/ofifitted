@@ -3,7 +3,7 @@ import {
   getCategoryCover,
   type ProductImage,
 } from "@/lib/catalog";
-import { megaMenu, navLinks } from "@/lib/taxonomy";
+import { megaMenu, navLinks, primaryLinks } from "@/lib/taxonomy";
 
 import { HeaderClient } from "./HeaderClient";
 
@@ -76,5 +76,11 @@ function buildNav(): NavGroup[] {
 }
 
 export function Header() {
-  return <HeaderClient groups={buildNav()} links={[...navLinks]} />;
+  return (
+    <HeaderClient
+      groups={buildNav()}
+      primary={[...primaryLinks]}
+      links={[...navLinks]}
+    />
+  );
 }

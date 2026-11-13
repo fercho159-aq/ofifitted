@@ -11,16 +11,23 @@ import { SearchBar } from "@/components/layout/SearchBar";
 import { searchProducts, type SearchResult } from "@/lib/search-action";
 import { drawer, megaPanel, overlay } from "@/lib/motion";
 import { contact, waMessages, whatsappUrl } from "@/lib/site";
+import { PRODUCTS_MENU_LABEL } from "@/lib/taxonomy";
 import { cn } from "@/lib/utils";
 
 import type { NavGroup } from "./Header";
 
+type NavLink = { label: string; href: string };
+
 type Props = {
+  /** Grupos del catálogo: van todos dentro del desplegable "Productos". */
   groups: NavGroup[];
-  links: { label: string; href: string }[];
+  /** Servicio de proyectos B2B: siempre visibles en escritorio. */
+  primary: NavLink[];
+  /** Enlaces secundarios: visibles desde xl. */
+  links: NavLink[];
 };
 
-export function HeaderClient({ groups, links }: Props) {
+export function HeaderClient({ groups, primary, links }: Props) {
   const pathname = usePathname();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -83,7 +90,7 @@ export function HeaderClient({ groups, links }: Props) {
       <div className="hidden bg-brand-600 text-white lg:block">
         <div className="container-page flex h-9 items-center justify-between text-xs">
           <p className="tracking-wide">
-            Fabricantes directos · Envíos a toda la República Mexicana
+            Proyectos corporativos llave en mano · Fabricantes directos · Cobertura nacional
           </p>
           <div className="flex items-center gap-5">
             {contact.phones.map((phone) => (
@@ -137,43 +144,69 @@ export function HeaderClient({ groups, links }: Props) {
 
           {/* Navegación de escritorio */}
           <nav aria-label="Principal" className="hidden items-center gap-1 lg:flex">
-            {groups.map((group) => {
-              const isOpen = openGroup === group.label;
-              return (
-                <div key={group.label} onMouseEnter={() => openNow(group.label)}>
-                  <Link
-                    href={group.href}
-                    aria-expanded={isOpen}
-                    aria-haspopup="true"
-                    onFocus={() => openNow(group.label)}
-                    className={cn(
-                      "relative flex h-[var(--header-h)] items-center px-2.5 text-sm font-medium whitespace-nowrap transition-colors xl:px-3",
-                      isOpen ? "text-brand-600" : "text-ink-700 hover:text-brand-600"
-                    )}
-                  >
-                    {group.label}
-                    <span
-                      className={cn(
-                        "absolute inset-x-3 bottom-0 h-[2px] origin-left bg-accent-600 transition-transform duration-300",
-                        isOpen ? "scale-x-100" : "scale-x-0"
-                      )}
-                    />
-                  </Link>
-                </div>
-              );
-            })}
+            {primary.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onMouseEnter={closeSoon}
+                className={cn(
+                  "flex h-[var(--header-h)] items-center px-2.5 text-sm font-medium whitespace-nowrap transition-colors xl:px-3",
+                  pathname === link.href
+                    ? "text-brand-600"
+                    : "text-ink-800 hover:text-brand-600"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
 
-            {/* Los enlaces secundarios aparecen hasta xl. Entre 1024 y 1280 el
-                mega menú ya ocupa el ancho disponible y meterlos aquí parte
-                las etiquetas en dos líneas; siguen accesibles desde el pie y
-                desde el menú móvil. */}
+            {/* Catálogo de piezas sueltas: un solo desplegable que agrupa
+                todas las líneas, para que no compita con el servicio de
+                proyectos en la barra. */}
+            <div onMouseEnter={() => openNow(PRODUCTS_MENU_LABEL)}>
+              <Link
+                href="/catalogo"
+                aria-expanded={openGroup === PRODUCTS_MENU_LABEL}
+                aria-haspopup="true"
+                onFocus={() => openNow(PRODUCTS_MENU_LABEL)}
+                className={cn(
+                  "relative flex h-[var(--header-h)] items-center gap-1 px-2.5 text-sm font-medium whitespace-nowrap transition-colors xl:px-3",
+                  openGroup === PRODUCTS_MENU_LABEL
+                    ? "text-brand-600"
+                    : "text-ink-600 hover:text-brand-600"
+                )}
+              >
+                {PRODUCTS_MENU_LABEL}
+                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden>
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span
+                  className={cn(
+                    "absolute inset-x-3 bottom-0 h-[2px] origin-left bg-accent-600 transition-transform duration-300",
+                    openGroup === PRODUCTS_MENU_LABEL ? "scale-x-100" : "scale-x-0"
+                  )}
+                />
+              </Link>
+            </div>
+
+            {/* Los enlaces secundarios aparecen hasta xl: entre 1024 y 1280
+                no caben sin partir etiquetas. Siguen accesibles desde el pie
+                y desde el menú móvil. */}
             <span className="mx-2 hidden h-4 w-px bg-ink-200 xl:block" aria-hidden />
 
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="hidden px-3 text-sm font-medium whitespace-nowrap text-ink-700 transition-colors hover:text-brand-600 xl:block"
+                onMouseEnter={closeSoon}
+                className="hidden px-2.5 text-sm whitespace-nowrap text-ink-600 transition-colors hover:text-brand-600 xl:block"
               >
                 {link.label}
               </Link>
@@ -183,14 +216,12 @@ export function HeaderClient({ groups, links }: Props) {
           <div className="flex items-center gap-2">
             <SearchBar onOpenChange={(isOpen) => { if (isOpen) setDrawerOpen(false); }} />
 
-            <a
-              href={whatsappUrl(waMessages.general)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/proyectos#cotizar"
               className="hidden shrink-0 items-center gap-2 bg-accent-600 px-5 py-2.5 text-sm font-medium whitespace-nowrap text-white transition-colors hover:bg-accent-700 sm:inline-flex"
             >
-              Cotizar ahora
-            </a>
+              Cotiza tu proyecto
+            </Link>
 
             <button
               type="button"
@@ -214,10 +245,10 @@ export function HeaderClient({ groups, links }: Props) {
 
         {/* ── Panel del mega menú ──────────────────────────────────── */}
         <AnimatePresence>
-          {openGroup && (
-            <MegaPanel
-              group={groups.find((g) => g.label === openGroup)!}
-              onEnter={() => openNow(openGroup)}
+          {openGroup === PRODUCTS_MENU_LABEL && (
+            <ProductsPanel
+              groups={groups}
+              onEnter={() => openNow(PRODUCTS_MENU_LABEL)}
               onLeave={closeSoon}
             />
           )}
@@ -229,6 +260,7 @@ export function HeaderClient({ groups, links }: Props) {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         groups={groups}
+        primary={primary}
         links={links}
       />
     </>
@@ -237,12 +269,12 @@ export function HeaderClient({ groups, links }: Props) {
 
 /* ══════════════════════════════════════════════════════════════════ */
 
-function MegaPanel({
-  group,
+function ProductsPanel({
+  groups,
   onEnter,
   onLeave,
 }: {
-  group: NavGroup;
+  groups: NavGroup[];
   onEnter: () => void;
   onLeave: () => void;
 }) {
@@ -256,76 +288,58 @@ function MegaPanel({
       onMouseLeave={onLeave}
       className="absolute inset-x-0 top-full hidden border-b border-ink-200 bg-paper shadow-[0_24px_48px_-24px_rgb(26_25_23/0.25)] lg:block"
     >
-      <div className="container-page grid grid-cols-12 gap-10 py-10">
-        {/* Promesa del grupo */}
-        <div className="col-span-3">
-          <p className="eyebrow text-accent-600">{group.label}</p>
-          <p className="mt-3 text-sm leading-relaxed text-ink-600">{group.blurb}</p>
-          <Link
-            href={group.href}
-            className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700"
-          >
-            Ver todo
-            <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden>
-              <path
-                d="M5 12h14M13 6l6 6-6 6"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Link>
+      <div className="container-page grid grid-cols-12 gap-8 py-10">
+        {/* Encabezado del catálogo */}
+        <div className="col-span-3 border-r border-ink-200 pr-8">
+          <p className="eyebrow text-ink-400">Catálogo general</p>
+          <p className="mt-3 text-sm leading-relaxed text-ink-600">
+            Piezas individuales de fabricación propia para reposición o
+            compras puntuales. ¿Equipas un espacio completo?{" "}
+            <Link href="/proyectos" className="font-medium text-brand-600 hover:text-brand-700">
+              Conoce Proyectos
+            </Link>
+            .
+          </p>
+          <div className="mt-5 flex flex-col gap-2 text-sm font-medium">
+            <Link href="/catalogo" className="text-ink-900 hover:text-brand-600">
+              Ver todos los productos →
+            </Link>
+            <Link href="/catalogos" className="text-ink-600 hover:text-brand-600">
+              Descargar catálogos PDF →
+            </Link>
+          </div>
         </div>
 
-        {/* Columnas de categorías */}
-        <div className="col-span-6 grid grid-cols-2 gap-x-8 gap-y-8">
-          {group.columns.map((column) => (
-            <div key={column.title}>
-              <p className="eyebrow mb-3 text-ink-400">{column.title}</p>
-              <ul className="space-y-1">
-                {column.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="group flex items-baseline justify-between gap-3 py-1.5 text-[15px] text-ink-800 transition-colors hover:text-brand-600"
-                    >
-                      <span className="relative">
-                        {item.label}
-                        <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-brand-600 transition-[width] duration-300 group-hover:w-full" />
-                      </span>
-                      <span className="text-xs tabular-nums text-ink-300">
-                        {item.count}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+        {/* Una columna por línea de producto */}
+        <div className="col-span-9 grid grid-cols-5 gap-x-6">
+          {groups.map((group) => (
+            <div key={group.label}>
+              <Link
+                href={group.href}
+                className="eyebrow mb-3 block text-ink-900 hover:text-brand-600"
+              >
+                {group.label}
+              </Link>
+              <ul className="space-y-0.5">
+                {group.columns
+                  .flatMap((column) => column.items)
+                  .map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="flex items-baseline justify-between gap-2 py-1 text-sm text-ink-700 transition-colors hover:text-brand-600"
+                      >
+                        <span>{item.label}</span>
+                        <span className="text-[11px] tabular-nums text-ink-300">
+                          {item.count}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
               </ul>
             </div>
           ))}
         </div>
-
-        {/* Destacado */}
-        {group.featured && (
-          <Link href={group.featured.href} className="group col-span-3">
-            <div className="relative aspect-4/3 overflow-hidden bg-ink-100">
-              <Image
-                src={group.featured.image.src}
-                alt={group.featured.label}
-                fill
-                sizes="320px"
-                placeholder="blur"
-                blurDataURL={group.featured.image.blurDataURL}
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
-            <p className="mt-3 text-sm font-medium text-ink-900">
-              {group.featured.label}
-            </p>
-            <p className="text-xs text-ink-500">Ver la línea completa</p>
-          </Link>
-        )}
       </div>
     </motion.div>
   );
@@ -337,12 +351,14 @@ function MobileDrawer({
   open,
   onClose,
   groups,
+  primary,
   links,
 }: {
   open: boolean;
   onClose: () => void;
   groups: NavGroup[];
-  links: { label: string; href: string }[];
+  primary: NavLink[];
+  links: NavLink[];
 }) {
   const [expanded, setExpanded] = useState<string | null>(null);
 
@@ -406,6 +422,24 @@ function MobileDrawer({
               className="flex-1 overflow-y-auto overscroll-contain px-5 py-4"
             >
               <ul className="divide-y divide-ink-100">
+                {primary.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      onClick={onClose}
+                      className="block py-3.5 text-lg font-medium text-ink-900"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+
+                <li className="pt-6 pb-1">
+                  <p className="eyebrow text-ink-400">
+                    {PRODUCTS_MENU_LABEL} · Catálogo general
+                  </p>
+                </li>
+
                 {groups.map((group) => {
                   const isOpen = expanded === group.label;
                   const panelId = `menu-${group.label.replace(/\s+/g, "-")}`;
@@ -414,7 +448,7 @@ function MobileDrawer({
                       <div className="flex items-center">
                         <Link
                           href={group.href}
-                          className="flex-1 py-3.5 text-lg font-medium text-ink-900"
+                          className="flex-1 py-3 text-base text-ink-800"
                         >
                           {group.label}
                         </Link>
@@ -491,7 +525,7 @@ function MobileDrawer({
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="block py-3.5 text-lg font-medium text-ink-900"
+                      className="block py-3 text-base text-ink-800"
                     >
                       {link.label}
                     </Link>
@@ -501,13 +535,20 @@ function MobileDrawer({
             </nav>
 
             <div className="shrink-0 border-t border-ink-200 p-5">
-              <a
-                href={whatsappUrl(waMessages.general)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/proyectos#cotizar"
+                onClick={onClose}
                 className="flex w-full items-center justify-center gap-2 bg-accent-600 py-3.5 text-sm font-medium text-white"
               >
-                Cotizar por WhatsApp
+                Cotiza tu proyecto
+              </Link>
+              <a
+                href={whatsappUrl(waMessages.consult)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex w-full items-center justify-center border border-ink-200 py-3 text-sm font-medium text-ink-800"
+              >
+                Agendar asesoría por WhatsApp
               </a>
               <div className="mt-4 flex items-end justify-between gap-4">
                 <div className="space-y-1">
@@ -537,7 +578,7 @@ function DrawerSearch({ onNavigate }: { onNavigate: () => void }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const doSearch = useCallback((q: string) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
