@@ -12,15 +12,16 @@ export function ProjectsBanner() {
               ¿Amueblas una oficina completa?
             </h2>
             <p className="mt-2 max-w-lg text-white/80">
-              Empresas, contratistas y arquitectos nos contratan para amueblar
-              pisos y edificios enteros. Una propuesta, un proveedor.
+              Empresas, arquitectos y constructoras nos confían proyectos
+              llave en mano: oficinas, salas de juntas, lobbies y áreas
+              comunes. Una propuesta, un proveedor.
             </p>
           </div>
           <Link
             href="/proyectos"
             className="inline-flex shrink-0 items-center gap-2 bg-white px-7 py-4 text-sm font-medium text-brand-700 transition-colors hover:bg-white/90"
           >
-            Conoce el servicio
+            Conoce Proyectos
             <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden>
               <path
                 d="M5 12h14M13 6l6 6-6 6"

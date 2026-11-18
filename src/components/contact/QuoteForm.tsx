@@ -164,7 +164,7 @@ export function QuoteForm() {
   );
 }
 
-function inputClass(invalid: boolean) {
+export function inputClass(invalid: boolean) {
   return cn(
     "w-full border bg-white px-4 py-3 text-sm text-ink-900 outline-none transition-colors",
     "placeholder:text-ink-400 focus:border-brand-600",
@@ -172,7 +172,7 @@ function inputClass(invalid: boolean) {
   );
 }
 
-function Field({
+export function Field({
   label,
   required = false,
   children,

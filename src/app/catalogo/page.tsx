@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { ProjectsBanner } from "@/components/home/ProjectsBanner";
+import { ViewerTeaser } from "@/components/home/ViewerTeaser";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import {
   catalogStats,
   getCategoryCover,
   getChildren,
+  getProductBySlug,
   getRootCategories,
+  getVisualizableProducts,
 } from "@/lib/catalog";
 
 export const metadata: Metadata = {
@@ -18,13 +22,16 @@ export const metadata: Metadata = {
 
 export default function CatalogPage() {
   const roots = getRootCategories();
+  const visualizable = getVisualizableProducts();
+  const teaserProduct =
+    getProductBySlug("altus-2") ?? visualizable.find((p) => p.cutout) ?? null;
 
   return (
     <>
       <section className="border-b border-ink-200 bg-white">
         <div className="container-page py-14 md:py-20">
           <Reveal>
-            <p className="eyebrow text-accent-600">Catálogo completo</p>
+            <p className="eyebrow text-accent-600">Catálogo general</p>
             <h1 className="heading-section mt-3 max-w-3xl">
               {catalogStats.products} modelos, todos fabricados por nosotros.
             </h1>
@@ -96,6 +103,11 @@ export default function CatalogPage() {
           })}
         </RevealGroup>
       </section>
+
+      {/* Quien llega por una pieza suelta también puede necesitar el
+          espacio completo: se le ofrece el servicio de proyectos. */}
+      <ProjectsBanner />
+      <ViewerTeaser product={teaserProduct} total={visualizable.length} />
     </>
   );
 }
